@@ -9,7 +9,7 @@ The project must be uploaded to a public GitHub repository for inspection. Pushe
 
 **【Instructions】**  
 1)	Read the list of development goals below.
-2)	Estimate which goals can be reached within a week, and report those estimated goals to the Product Owner (“PO” – Connor).
+2)	Estimate which goals can be reached within a week, and report those estimated goals to the Product Owner.
 3)	After confirming the week’s goals, spend the rest of the week developing the project, aiming to reach the designated goal.
 4)	Check-in with the PO for a status update. 
 5)	Repeat steps 2 - 4 until project has ended.
