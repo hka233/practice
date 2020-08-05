@@ -22,6 +22,6 @@ D)	JAR build running on an AWS server (free tier)
 ＊	Unit testing with ~100% coverage for all goal phases
 
 **【Notes】**  
--	IDeale and other internal frameworks not permitted as the project will be uploaded to a public GitHub repository.
+-	Internal frameworks are not permitted as the project will be uploaded to a public GitHub repository.
 -	A free personal GitHub account/AWS account can be used to upload the code and JAR.
 -	Be sure to notify the PO of the GitHub project’s public repository details so progress can be tracked.
