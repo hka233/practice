@@ -16,17 +16,17 @@
 	<h:form>
 	
 		Username: 
-		<h:inputText id="username" value="#{theUserName}"
+		<h:inputText id="username" value="#{checkAuthentication.username}"
 					pt:placeholder="Type in Username"/>
 					<br/><br/>
 					
 		Password: 
 		
-		<h:inputSecret id="password" value="#{checkPassword.password}"
+		<h:inputSecret id="password" value="#{checkAuthentication.password}"
 					pt:placeholder="Type in Password"/>
 					<br/><br/>
 
-		      <h:commandButton value="Submit" action="welcome-page" />
+		      <h:commandButton value="Submit" action="#{checkAuthentication.checkAuth}" />
 
 	</h:form>
 </h:body>
