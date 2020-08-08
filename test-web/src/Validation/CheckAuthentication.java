@@ -28,7 +28,7 @@ public class CheckAuthentication {
 		this.password = password;
 	}
 	
-	public String checkAuth() {
+	public String checkAuth(String username , String password ) {
 		if (username.equals("testuser") && 
 				password.equals("testpass")) return "welcome-page";
 		else return "failed-login";
