@@ -1,15 +1,19 @@
 package Validation;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+@SessionScoped
 @ManagedBean
 public class CheckAuthentication {
 
 	private String username;
 	private String password;
+	private boolean isLogin = false;
 		
 	public CheckAuthentication() {
-		
+	
 	}
 
 	public String getUsername() {
@@ -28,10 +32,37 @@ public class CheckAuthentication {
 		this.password = password;
 	}
 	
-	public String checkAuth(String username , String password ) {
+	public boolean isLogin() {
+		return isLogin;
+	}
+
+	public void setLogin(boolean isLogin) {
+		this.isLogin = isLogin;
+	}
+	
+	public void verifyLogin() {
+		if (!this.isLogin) {
+			doRedirect("login-page.xhtml");
+		}
+	}
+	
+	private void doRedirect(String url) {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.getExternalContext().redirect(url);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void checkAuth() {
 		if (username.equals("testuser") && 
-				password.equals("testpass")) return "welcome-page";
-		else return "failed-login";
+				password.equals("testpass")) {
+			this.isLogin = true;
+			doRedirect("welcome-page.xhtml");
+		}
+				
+		else doRedirect("login-page.xhtml");
 	}
 	
 }

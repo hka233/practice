@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"
 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	
 	
 	<h:head>
 		<title>Successful Login </title>
+		<f:metadata>
+			<f:event listener="#{checkAuthentication.verifyLogin()}" type="preRenderView"></f:event>
+		</f:metadata>
 	</h:head>
 	<h:body>
 	Welcome!<br/>
