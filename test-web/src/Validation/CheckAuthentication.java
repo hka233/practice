@@ -40,13 +40,14 @@ public class CheckAuthentication {
 		this.isLogin = isLogin;
 	}
 	
+	//checks login state when accessing pages other than login
 	public void verifyLogin() {
 		if (!this.isLogin) {
 			doRedirect("login-page.xhtml");
 		}
 	}
 	
-	private void doRedirect(String url) {
+	public void doRedirect(String url) {
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect(url);

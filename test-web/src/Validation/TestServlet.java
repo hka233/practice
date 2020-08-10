@@ -26,6 +26,8 @@ public class TestServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/plain");
 		
+		
+		//Basic JDBC code to connect to the testdb dataset
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -33,12 +35,13 @@ public class TestServlet extends HttpServlet {
 		try {
 			myConn = dataSource.getConnection();
 
-			String sql = "SELECT * FROM testdb.account_info;";
+			String sql = "SELECT * FROM account_info;";
 
 			myStmt = myConn.createStatement();
 
 			myRs = myStmt.executeQuery(sql);
-
+			
+			//while loop to list out the user names
 			while (myRs.next()) {
 				String username = myRs.getString("username");
 				out.println(username);
