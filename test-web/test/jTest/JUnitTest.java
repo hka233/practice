@@ -1,6 +1,9 @@
-package Validation;
+package jTest;
 
 import org.junit.Test;
+
+import Validation.CheckAuthentication;
+
 import static org.junit.Assert.assertEquals;
 
 public class JUnitTest {
@@ -18,6 +21,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testDoRedirect() {
+		
 		//assertEquals("welcome-page.xhtml", checkAuth.doRedirect(redirect));
 	}
 
