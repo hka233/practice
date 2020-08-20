@@ -15,6 +15,8 @@
 	Welcome!<br/>
 		Your username is #{checkAuthentication.username}<br/>
 		Your password is #{checkAuthentication.password}
-	
+		<h:form>
+		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" />
+	</h:form>
 	</h:body>
 </html>

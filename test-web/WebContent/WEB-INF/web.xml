@@ -27,6 +27,8 @@
             <form-error-page>/failed-login.xhtml</form-error-page>
         </form-login-config>
     </login-config> 
+    
+
   <resource-ref>
   	<description>Account Info DataSource </description>
   	<res-ref-name>jdbc/testdb</res-ref-name>

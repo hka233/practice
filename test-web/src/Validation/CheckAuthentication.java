@@ -1,8 +1,12 @@
 package Validation;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 /**
  * 
  * @author Hamza Ahmed
@@ -68,14 +72,29 @@ public class CheckAuthentication {
 	/*
 	 * Hard-coded authentication, used for testing the web application
 	 */
-	public void checkAuth() {
+	public void checkAuth() throws ServletException, IOException, SQLException {
+		
 		if (username.equals("testuser") && 
 				password.equals("testpass")) {
 			this.isLogin = true;
 			doRedirect("welcome-page.xhtml");
 		}
 				
+		else doRedirect("failed-login.xhtml");
+		/*
+		boolean valid = AccountDAO.validate(username, password);
+		if (valid) {
+			this.isLogin = true;
+			doRedirect("welcome-page.xhtml");
+		}
 		else doRedirect("login-page.xhtml");
+		*/
+	}
+	
+	public void logout() {
+		this.isLogin = false;
+		doRedirect("login-page.xhtml");
+		
 	}
 	
 }

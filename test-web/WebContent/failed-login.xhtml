@@ -13,6 +13,8 @@
 		The password you typed #{checkAuthentication.password} <br/>
 		The username is testuser <br/>
 		The password is testpass 
-	
+	<h:form>
+		<h:commandButton value="Login" action="#{checkAuthentication.logout}" />
+	</h:form>
 	</h:body>
 </html>
