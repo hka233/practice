@@ -10,6 +10,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession; 
+import javax.faces.application.ResourceHandler;
 
 
 /**
@@ -39,16 +41,30 @@ public class AuthFilter implements Filter {
 		
 	    HttpServletResponse res = (HttpServletResponse) response;
 	    HttpServletRequest req = (HttpServletRequest) request;
+	    HttpSession session = req.getSession(false);
+	    
+	    String loginURL = req.getContextPath() + "/faces/login-page.xhtml";
 	    /*
 	     * Set response headers to no-cache
 	     * Erasing the cache would solve the problem of the back button bringing the user back
 	     * to the welcome screen after logging out
 	     */
+	    /*
 		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		res.setDateHeader("Expires", 0); // Proxies.
-		chain.doFilter(request, response);
-	}
+		*/
+		boolean loggedIn = session != null && session.getAttribute("username") != null;
+	    boolean loginRequest = req.getRequestURI().equals(loginURL);
+	    boolean resourceRequest = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
+
+	    if (loggedIn || loginRequest || resourceRequest) {
+	        chain.doFilter(request, response);
+	    } else {
+	        res.sendRedirect(loginURL);
+	    }
+	    
+	    }  
 
 	/**
 	 * @see Filter#init(FilterConfig)

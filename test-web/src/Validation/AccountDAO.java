@@ -27,7 +27,7 @@ public class AccountDAO extends HttpServlet{
 	private static DataSource dataSource;
 	private String jndiName = "java:comp/env/jdbc/account_info";
 	
-	// creating instance of 
+	/*
 	public static AccountDAO getInstance() throws Exception {
 		if(instance == null) {
 			instance = new AccountDAO();
@@ -45,7 +45,7 @@ public class AccountDAO extends HttpServlet{
 		DataSource theDataSource = (DataSource) context.lookup(jndiName);
 		return theDataSource;
 	}
-	
+	*/
 	/*
 	 * uses username to find the salt and hashed password, where it will try to unhash and see
 	 * if the password matches the typed password (still incomplete)

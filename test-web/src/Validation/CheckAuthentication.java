@@ -7,13 +7,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.faces.bean.RequestScoped;
 /**
  * 
  * @author Hamza Ahmed
  * This class is used to test the login function with hard-coded password and username
  *  
  */
-@SessionScoped
+@RequestScoped
 @ManagedBean
 public class CheckAuthentication {
 
@@ -74,13 +75,25 @@ public class CheckAuthentication {
 	 */
 	public void checkAuth() throws ServletException, IOException, SQLException {
 		
-		if (username.equals("testuser") && 
-				password.equals("testpass")) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if (this.username.equals("testuser") && 
+				this.password.equals("testpass")) {
+			/*
 			this.isLogin = true;
 			doRedirect("welcome-page.xhtml");
+			*/
+			context.getExternalContext().getSessionMap().put("username", username);
+			try {
+				context.getExternalContext().redirect("welcome-page.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 				
-		else doRedirect("failed-login.xhtml");
+		else //doRedirect("failed-login.xhtml");
+			context.getExternalContext().redirect("failed-login.xhtml");
 		/*
 		boolean valid = AccountDAO.validate(username, password);
 		if (valid) {
@@ -92,8 +105,19 @@ public class CheckAuthentication {
 	}
 	
 	public void logout() {
+		FacesContext context = FacesContext.getCurrentInstance();
+    	context.getExternalContext().invalidateSession();
+        try {
+			context.getExternalContext().redirect("login-page.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		/*
 		this.isLogin = false;
 		doRedirect("login-page.xhtml");
+		*/
 		
 	}
 	
