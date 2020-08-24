@@ -14,7 +14,7 @@ import javax.faces.bean.RequestScoped;
  * This class is used to test the login function with hard-coded password and username
  *  
  */
-@RequestScoped
+@SessionScoped
 @ManagedBean
 public class CheckAuthentication {
 
