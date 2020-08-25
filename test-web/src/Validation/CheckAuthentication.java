@@ -1,6 +1,8 @@
 package Validation;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 import javax.faces.bean.ManagedBean;
@@ -21,6 +23,7 @@ public class CheckAuthentication {
 	private String username;
 	private String password;
 	private boolean isLogin = false; //authentication check is done from this value
+	
 		
 	public CheckAuthentication() {
 	
@@ -73,12 +76,17 @@ public class CheckAuthentication {
 	/*
 	 * Hard-coded authentication, used for testing the web application
 	 */
-	public void checkAuth() throws ServletException, IOException, SQLException {
+	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		
+		DbConnect pass = new DbConnect(); 
+		pass.getPass(username);
+		byte[] salt = pass.getsalt();
+		String hashPass = PassHash.hashPassword(this.password, salt);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if (this.username.equals("testuser") && 
-				this.password.equals("testpass")) {
+		if (hashPass.equals(pass.getPassword())) {
 			/*
 			this.isLogin = true;
 			doRedirect("welcome-page.xhtml");

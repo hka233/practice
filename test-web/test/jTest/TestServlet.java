@@ -3,6 +3,7 @@ package jTest;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -29,21 +30,28 @@ public class TestServlet extends HttpServlet {
 		
 		//Basic JDBC code to connect to the testdb dataset
 		Connection myConn = null;
-		Statement myStmt = null;
+		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myConn = dataSource.getConnection();
 
-			String sql = "SELECT * FROM account_info;";
+			//String sql = "SELECT * FROM account_info;";
+			//String sql = "SELECT * FROM testdb.account_info WHERE username = \"testUser\";";
 
-			myStmt = myConn.createStatement();
+			//myStmt = myConn.createStatement();
 
-			myRs = myStmt.executeQuery(sql);
+			//myRs = myStmt.executeQuery(sql);
+			
+			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;";
+			myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1, "test2");
+			
+			myRs = myStmt.executeQuery();
 			
 			//while loop to list out the user names
 			while (myRs.next()) {
-				String username = myRs.getString("username");
+				String username = myRs.getString("password_name");
 				out.println(username);
 				System.out.println(username);
 			}

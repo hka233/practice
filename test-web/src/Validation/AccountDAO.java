@@ -68,7 +68,7 @@ public class AccountDAO extends HttpServlet{
 			myRs = myStmt.executeQuery();
 			
 			if (myRs.next()) {
-				pw = myRs.getString("password");
+				pw = myRs.getString("password_name");
 				salt = myRs.getString("salt");
 			}
 			

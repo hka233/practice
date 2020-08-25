@@ -34,16 +34,10 @@ public class AuthFilter implements Filter {
 	    HttpSession session = req.getSession(false);
 	    
 	    String loginURL = req.getContextPath() + "/login-page.xhtml";
-	    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        res.setDateHeader("Expires", 0);
         
 		boolean loggedIn = session != null && session.getAttribute("username") != null;
 	    boolean loginRequest = req.getRequestURI().equals(loginURL);
 	    boolean resourceRequest = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
-	    
-	    
-
 	    
 	    if (loggedIn || loginRequest || resourceRequest) {
 	    	if (!resourceRequest) {
