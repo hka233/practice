@@ -79,14 +79,15 @@ public class CheckAuthentication {
 	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		
-		DbConnect pass = new DbConnect(); 
-		pass.getPass(username);
-		byte[] salt = pass.getsalt();
-		String hashPass = PassHash.hashPassword(this.password, salt);
+		
+		//byte[] salt = pass.getsalt();
+		//String hashPass = PassHash.hashPassword(password, salt);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if (hashPass.equals(pass.getPassword())) {
+		String str =DbConnect.getPass(username);
+		
+		if (password.equals(str)) {
 			/*
 			this.isLogin = true;
 			doRedirect("welcome-page.xhtml");

@@ -45,7 +45,7 @@ public class PassHash {
         return salt;
     }
 	
-	private static String toStr(byte[] array) throws NoSuchAlgorithmException
+	public static String toStr(byte[] array) throws NoSuchAlgorithmException
     {
 		
         BigInteger bi = new BigInteger(1, array);
