@@ -7,14 +7,33 @@
 	
 	<h:head>
 		<title>Successful Login </title>
-
+		
+		<script type="text/javascript">
+		function backPressed() {
+			if (window.history &amp;&amp; history.pushState) {
+			    addEventListener('load', function() {
+			        history.pushState(null, null, null); // creates new history entry with same URL
+			        addEventListener('popstate', function() {			            
+			                history.pushState(null, null, null);			        
+			        });    
+			    });
+			}
+		}
+		</script>
+		
 	</h:head>
 	<h:body>
+	
 	Welcome!<br/>
 		Your username is #{checkAuthentication.username}<br/>
 		Your password is #{checkAuthentication.password}
 		<h:form>
-		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" />
+		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" /><br/>
 	</h:form>
+	
+	<script type="text/javascript">
+	 backPressed();
+	</script>
+	
 	</h:body>
 </html>
