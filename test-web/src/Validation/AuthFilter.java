@@ -34,11 +34,11 @@ public class AuthFilter implements Filter {
 	    HttpSession session = req.getSession(false);
 	    
 	    String loginURL = req.getContextPath() + "/login-page.xhtml";
-        
+	    
 		boolean loggedIn = session != null && session.getAttribute("username") != null;
 	    boolean loginRequest = req.getRequestURI().equals(loginURL);
 	    boolean resourceRequest = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
-	    
+
 	    if (loggedIn || loginRequest || resourceRequest) {
 	    	if (!resourceRequest) {
 	    		/*
@@ -50,6 +50,7 @@ public class AuthFilter implements Filter {
 	    		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 	    		res.setDateHeader("Expires", 0); // Proxies.
 	    	}
+	    	
 	        chain.doFilter(request, response);
 	    } else {
 	        res.sendRedirect(loginURL);

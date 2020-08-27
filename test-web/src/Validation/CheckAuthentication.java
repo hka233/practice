@@ -22,8 +22,6 @@ public class CheckAuthentication {
 
 	private String username;
 	private String password;
-	private boolean isLogin = false; //authentication check is done from this value
-	
 		
 	public CheckAuthentication() {
 	
@@ -45,72 +43,22 @@ public class CheckAuthentication {
 		this.password = password;
 	}
 	
-	public boolean isLogin() {
-		return isLogin;
-	}
-
-	public void setLogin(boolean isLogin) {
-		this.isLogin = isLogin;
-	}
-	
-	//checks login state when accessing pages other than login
-	public void verifyLogin() {
-		if (!this.isLogin) {
-			doRedirect("login-page.xhtml");
-		}
-	}
-	
-	/*
-	 * JSF saves the state onto the server, so in this method we will try to shift it to a new state
-	 * Whenever this method is called, and is successful, it would send a request to the specified URL
-	 */
-	public void doRedirect(String url) {
-		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance(); //facesContex stores current state of web-app
-			facesContext.getExternalContext().redirect(url); //sends a request to the server to redirect to the URL
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	/*
-	 * Hard-coded authentication, used for testing the web application
-	 */
 	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		
-		
-		
-		//byte[] salt = pass.getsalt();
-		//String hashPass = PassHash.hashPassword(password, salt);
-		
 		FacesContext context = FacesContext.getCurrentInstance();
+		DbConnect dbConnect = new DbConnect();
+		boolean valid =dbConnect.getPass(username,password);
 		
-		String str =DbConnect.getPass(username);
-		
-		if (password.equals(str)) {
-			/*
-			this.isLogin = true;
-			doRedirect("welcome-page.xhtml");
-			*/
+		if (valid) {
 			context.getExternalContext().getSessionMap().put("username", username);
 			try {
 				context.getExternalContext().redirect("welcome-page.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-				
-		else //doRedirect("failed-login.xhtml");
+		else 
 			context.getExternalContext().redirect("failed-login.xhtml");
-		/*
-		boolean valid = AccountDAO.validate(username, password);
-		if (valid) {
-			this.isLogin = true;
-			doRedirect("welcome-page.xhtml");
-		}
-		else doRedirect("login-page.xhtml");
-		*/
 	}
 	
 	public void logout() {
@@ -121,13 +69,7 @@ public class CheckAuthentication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		/*
-		this.isLogin = false;
-		doRedirect("login-page.xhtml");
-		*/
-		
+
 	}
 	
 }
