@@ -1,6 +1,5 @@
 package Validation;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,26 +7,9 @@ import java.sql.PreparedStatement;
 
 public class DbConnect{
 	
-	public static void main(String[] args) throws NoSuchAlgorithmException {
-			DbConnect pass = new DbConnect();
-			boolean str = pass.getPass("testuser" , "testpass");
-			System.out.println(str);
-	}
-	/*
-	private String password;
-	private byte[] salt;
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public byte[] getsalt() {
-		return salt;
-	}
-*/
-	private static final String url = "jdbc:mysql://localhost:3306/testdb"; 
-	private static final String user = "testUser"; 
-	private static final String pass = "password";
+	private String url = "jdbc:mysql://localhost:3306/testdb"; 
+	private String user = "testUser"; 
+	private String pass = "password";
 
 	public boolean getPass(String username, String password)  {
 		
@@ -40,10 +22,10 @@ public class DbConnect{
 		boolean valid = false;
 		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = DriverManager.getConnection(url, user, pass);
 			
-			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;";
+			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;"; //query to database
 			myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1, username);
 			
@@ -55,10 +37,14 @@ public class DbConnect{
 				dbsalt = myRs.getString("salt");
 				//this.salt = PassHash.toByteArr(dbsalt);
 			}
+			byte[] salt = {};
+			String pass = "no";
+			if (dbsalt != "") {
+				salt = PassHash.toByteArr(dbsalt);  //turning salt String to byte array to use it for hashing
+				pass = PassHash.hashPassword(password, salt);
+			}
 			
-			byte[] salt = PassHash.toByteArr(dbsalt);
-			String pass = PassHash.hashPassword(password, salt);
-			valid = dbPass.equals(pass);
+			valid = dbPass.equals(pass); //after hashing user given password and database password, it is compared here
 			
 			
 			return valid;

@@ -7,7 +7,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession; 
@@ -38,7 +37,7 @@ public class AuthFilter implements Filter {
 		boolean loggedIn = session != null && session.getAttribute("username") != null;
 	    boolean loginRequest = req.getRequestURI().equals(loginURL);
 	    boolean resourceRequest = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
-
+	    
 	    if (loggedIn || loginRequest || resourceRequest) {
 	    	if (!resourceRequest) {
 	    		/*

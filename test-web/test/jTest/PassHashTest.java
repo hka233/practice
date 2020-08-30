@@ -29,7 +29,8 @@ public class PassHashTest {
 	    assertTrue(hash1.equals(hash2)); //Since we are using the same salt, it should be equal
 
 	  }
-
+	  
+	  //testing salt method
 	  @Test
 	  public void diffSaltSamePasswordTest() throws Exception {
 	    String testpass = "password123";

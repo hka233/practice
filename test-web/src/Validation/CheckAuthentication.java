@@ -5,11 +5,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.faces.bean.RequestScoped;
 /**
  * 
  * @author Hamza Ahmed
@@ -43,32 +43,39 @@ public class CheckAuthentication {
 		this.password = password;
 	}
 	
+	public boolean checkDB() {
+		DbConnect dbConnect = new DbConnect();
+		return dbConnect.getPass(username,password);
+	}
+	//checks whether the typed username and password is correct
 	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
-		DbConnect dbConnect = new DbConnect();
-		boolean valid =dbConnect.getPass(username,password);
 		
-		if (valid) {
-			context.getExternalContext().getSessionMap().put("username", username);
+		if (checkDB()) {
+			context.getExternalContext().getSessionMap().put("username", username); //adds username into session: as long as it is saved there, the user is logged in
 			try {
-				context.getExternalContext().redirect("welcome-page.xhtml");
+				context.getExternalContext().redirect("welcome-page.xhtml"); //redirects to welcome page
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		else 
-			context.getExternalContext().redirect("failed-login.xhtml");
+			//Send an error message on Login Failure 
+            context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
+		
 	}
-	
+	//removes values from the session which would make them unable to get into welcome page without logging in again
 	public void logout() {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
     	context.getExternalContext().invalidateSession();
         try {
-			context.getExternalContext().redirect("login-page.xhtml");
+			context.getExternalContext().redirect("login-page.xhtml");  //redirects them to login page
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 	
