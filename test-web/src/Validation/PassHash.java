@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
@@ -44,10 +43,9 @@ public class PassHash {
         sr.nextBytes(salt);
         return salt;
     }
-	
+	//converts byte array into hex String 
 	public static String toStr(byte[] array) throws NoSuchAlgorithmException
     {
-		
         BigInteger bi = new BigInteger(1, array);
         String str = bi.toString(16);
         //System.out.println("byte array " + Arrays.toString(array));
@@ -55,7 +53,8 @@ public class PassHash {
         return str;
     }
 	
-	public static byte[] toByteArr(String hexString) {
+	//turns hexed represetation into a byte array 
+	public static byte[] toByteArr(String hexString) throws NumberFormatException {
 	    byte[] byteArray = new BigInteger(hexString, 16)
 	      .toByteArray();
 	    if (byteArray[0] == 0) {

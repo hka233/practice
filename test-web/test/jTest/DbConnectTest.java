@@ -15,6 +15,7 @@ public class DbConnectTest {
 		dbConnect = new DbConnect();
 	  }
 	
+	//testing with correct username and password
 	@Test
 	public void correctUserPassTest() {
 		String username = "testuser";
@@ -24,6 +25,7 @@ public class DbConnectTest {
 		assertTrue(authenticate);
 	}
 	
+	//testing with wrong username and password
 	@Test
 	public void correctUserWrongPassTest() {
 		String username = "testuser";
