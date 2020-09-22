@@ -9,7 +9,12 @@
 
 
 <h:head>
-	<title>Login Page</title>
+	<script type="text/javascript"> 
+        window.history.forward(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script> 
 
 </h:head>
 
@@ -31,7 +36,14 @@
 					<br/><br/>
 
 		      <h:commandButton value="Submit" action="#{checkAuthentication.checkAuth}" />
+		      <h:commandButton value="Sign Up" action="register-form" />
 
 	</h:form>
+	
+	<script>
+		if ( window.history.replaceState ) {
+  		window.history.replaceState( null, null, window.location.href );
+	}
+	</script>
 </h:body>
 </html>

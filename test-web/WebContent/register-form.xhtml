@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:a="http://xmlns.jcp.org/jsf/facelets">
+
+
+
+<h:head>
+
+
+</h:head>
+
+<h:body>
+	Register Form <br/><br/><br/>
+	
+	<h:form>
+	
+		<h:messages globalOnly="true" style="color:red;margin:8px;" />
+		
+		First Name: 
+		<h:inputText id="firstname" value="#{registerForm.firstname}" />
+		<br/><br/> 
+					
+		Last Name: 
+		<h:inputText id="lastname" value="#{registerForm.lastname} "/>
+		<br/><br/>
+		
+		Email Address: 
+		<h:inputText id="email" value="#{registerForm.email}" />
+		<br/><br/>
+		
+		Create Username: 
+		<h:inputText id="uname" value="#{registerForm.uname}"/>
+		<br/><br/>
+		
+		Create Password: 
+		<h:inputText id="psw" value="#{registerForm.psw}"/>
+		<br/><br/>
+		
+		Confirm Password: 
+		<h:inputText id="checkpsw" value="#{registerForm.checkpsw}"/>
+		<br/><br/>
+
+		<h:commandButton value="Submit" action="#{registerForm.checkAcc}" />
+
+	</h:form>
+	
+</h:body>
+</html>
