@@ -13,7 +13,6 @@
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
 <!--Defines Login Config -->
-
 <filter>
    <filter-name>AuthFilter</filter-name>
    <filter-class>Validation.AuthFilter</filter-class>
@@ -21,8 +20,18 @@
 
 <filter-mapping>
    <filter-name>AuthFilter</filter-name>
-   <url-pattern>*.xhtml</url-pattern>
+   <url-pattern>/welcome-page.xhtml</url-pattern>
 </filter-mapping>
+
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+</context-param>
+  
+  <error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/login.xhtml</location>
+</error-page>
 
   <resource-ref>
   	<description>Account Info DataSource </description>

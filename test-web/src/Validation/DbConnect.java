@@ -7,6 +7,13 @@ import java.sql.PreparedStatement;
 
 public class DbConnect{
 	
+	public static void main(String[] args) {
+		DbConnect dbConnect = new DbConnect();
+		boolean str = dbConnect.getPass("testuser", "testpass");
+		System.out.println(str);
+		
+		
+	}
 	private String url = "jdbc:mysql://localhost:3306/testdb"; 
 	private String user = "testUser"; 
 	private String pass = "password";
