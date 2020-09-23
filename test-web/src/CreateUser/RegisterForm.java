@@ -1,28 +1,98 @@
 package CreateUser;
 
+import java.io.IOException;
+import java.io.Serializable;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
-public class RegisterForm {
+@SessionScoped
+public class RegisterForm implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String uname;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private String pwd;
-	private String checkpsw;
+	private String checkpwd;
 	private String password;
 
 	public RegisterForm() {
 	}
 	
-	public RegisterForm(String uname, String firstname, String lastname, String email, String pwd) {
+	public RegisterForm(String uname, String firstname, String lastname, String email, String password) {
 		this.uname = uname;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
-		this.pwd = pwd;
+		this.password = password;
 	}
+	
+	public boolean checkEmail(RegisterForm registerForm)  {
+		Connect2DB connect2DB = new Connect2DB();
+		boolean chkemail = false;
+		try {
+			chkemail = connect2DB.searchEmail(registerForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return chkemail;
+	}
+	
+	public boolean checkUser(RegisterForm registerForm)  {
+		Connect2DB connect2DB = new Connect2DB();
+		boolean chkuser = false;
+		try {
+			chkuser = connect2DB.searchUser(registerForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return chkuser;
+	}
+	
+	public String checkPass(RegisterForm registerForm) {
+		Connect2DB connect2DB = new Connect2DB();
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (!checkUser(registerForm)) {
+			if (!checkEmail(registerForm)) {
+				if (pwd.equals(checkpwd)) {
+					this.password = pwd;
+					try {
+						connect2DB.addUser(registerForm);
+						return "user-info?faces-redirect=true";
+				
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+				else
+					context.addMessage(null, new FacesMessage("Passwords do not match"));
+			}
+			else 
+				context.addMessage(null, new FacesMessage("This email is already used."));
+		}
+		else
+			context.addMessage(null, new FacesMessage("This username is taken"));
+		
+		return null;
+	}
+	
+	public void navigateRegister() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("register-form.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public String getUname() {
 		return uname;
@@ -54,11 +124,11 @@ public class RegisterForm {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String getCheckpsw() {
-		return checkpsw;
+	public String getCheckpwd() {
+		return checkpwd;
 	}
-	public void setCheckpsw(String checkpsw) {
-		this.checkpsw = checkpsw;
+	public void setCheckpwd(String checkpwd) {
+		this.checkpwd = checkpwd;
 	}
 	public String getPassword() {
 		return password;

@@ -75,8 +75,15 @@ public class CheckAuthentication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
+	}
+	
+	public void navigateRegister() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("user-info.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

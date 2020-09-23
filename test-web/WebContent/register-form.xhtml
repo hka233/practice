@@ -9,7 +9,9 @@
 
 
 <h:head>
-
+	<style>
+		.error{color:red}
+	</style>
 
 </h:head>
 
@@ -17,36 +19,73 @@
 	Register Form <br/><br/><br/>
 	
 	<h:form>
-	
-		<h:messages globalOnly="true" style="color:red;margin:8px;" />
+		<h:message styleClass="error" />
+		
+		 
 		
 		First Name: 
-		<h:inputText id="firstname" value="#{registerForm.firstname}" />
+		<h:inputText 	id="firstname" 
+						label = "First Name"
+						value="#{registerForm.firstname}" 
+						required = "true"/>
+						
+		<h:message for="firstname" styleclass= "error"></h:message>
 		<br/><br/> 
 					
 		Last Name: 
-		<h:inputText id="lastname" value="#{registerForm.lastname} "/>
+		<h:inputText 	id="lastname" 
+						label= "Last Name"
+						value="#{registerForm.lastname}" 
+						required = "true"/>
+						
+		<h:message for="lastname" styleclass= "error"></h:message>
 		<br/><br/>
 		
 		Email Address: 
-		<h:inputText id="email" value="#{registerForm.email}" />
+		<h:inputText 	id="email" 
+						label= "Email"
+						value="#{registerForm.email}"  
+						validatorMessage="Invalid email format"
+						required = "true">
+						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
+						
+		<h:message for="email" styleclass= "error"></h:message>
+									
 		<br/><br/>
 		
 		Create Username: 
-		<h:inputText id="uname" value="#{registerForm.uname}"/>
+		<h:inputText 	id="uname" 
+						label = "Username"
+						value="#{registerForm.uname}" 
+						required = "true"/>
+						
+		<h:message for="uname" styleclass= "error"></h:message>
 		<br/><br/>
 		
 		Create Password: 
-		<h:inputText id="psw" value="#{registerForm.psw}"/>
+		<h:inputSecret 	id="psw" 
+						label = "Password"
+						value="#{registerForm.pwd}" 
+						required = "true">
+						<f:validateLength minimum="8" maximum="15"/>
+						</h:inputSecret>
+						
+		<h:message for="psw" styleclass= "error"></h:message>
 		<br/><br/>
 		
 		Confirm Password: 
-		<h:inputText id="checkpsw" value="#{registerForm.checkpsw}"/>
+		<h:inputSecret 	id="checkpsw" 
+						label = "Confirmed Password"
+						value="#{registerForm.checkpwd}" 
+						required = "true"/>
+		<h:message for="checkpsw" styleclass= "error"></h:message>
 		<br/><br/>
 
-		<h:commandButton value="Submit" action="#{registerForm.checkAcc}" />
+		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
+		  
 
 	</h:form>
-	
+	<h:button value="Return to Login" outcome="login-page?faces-redirect=true" />
 </h:body>
 </html>
