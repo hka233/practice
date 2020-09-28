@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -19,14 +20,14 @@ public class Connect2DB {
 	//Testing class
 	public static void main(String[] args) {
 		RegisterForm registerForm = new RegisterForm("test3", "john", "doe", "john.doe@gmail.com", "TESTpass123");
-		Connect2DB connect2DB = new Connect2DB();
+		//Connect2DB connect2DB = new Connect2DB();
 		try {
-			connect2DB.addUser(registerForm);
+			//connect2DB.addUser(registerForm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	//Using datasource to hide the url, username, password of database
 	//information about the database is stored in db.properties under WEB-INF
 	DataSource ds = DsFactory.getDataSource();
@@ -47,7 +48,7 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "INSERT INTO testdb.account_info (username, first_name, last_name, email, salt, password_name) VALUES ( ?, ?, ?, ?, ?, ?);"; //query to database
+			String sql = "INSERT INTO testdb.account_info (username, first_name, last_name, email, salt, password_name, password) VALUES ( ?, ?, ?, ?, ?, ?, ?);"; //query to database
 			
 			myStmt = myConn.prepareStatement(sql);
 			
@@ -58,6 +59,7 @@ public class Connect2DB {
 			myStmt.setString(4, userinfo.getEmail());
 			myStmt.setString(5, strSalt);
 			myStmt.setString(6, hashpassword);
+			myStmt.setString(7, userinfo.getPassword()); //added for testing
 			
 			myStmt.execute();
 		}
@@ -157,6 +159,50 @@ public class Connect2DB {
 			finally {
 				close (myConn, myStmt);
 			}
+	}
+	
+	public List<RegisterForm> getUser() {
+
+		List<RegisterForm> users = new ArrayList<>();
+
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			myConn = ds.getConnection();
+
+			String sql = "select * from testdb.account_info order by id_num;";
+
+			myStmt = myConn.createStatement();
+
+			myRs = myStmt.executeQuery(sql);
+
+			// process result set
+			while (myRs.next()) {
+				
+				// retrieve data from result set row
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String username = myRs.getString("username");
+				String email = myRs.getString("email");
+				String password = myRs.getString("password");
+				
+				// create new user object
+				RegisterForm tempUsers = new RegisterForm(username, firstName, lastName, email, password);
+
+				// add it to the list of students
+				users.add(tempUsers);
+			}
+			
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close (myConn, myStmt, myRs);
+		}
+		return users;	
 	}
 	
 	

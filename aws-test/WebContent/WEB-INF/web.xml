@@ -21,7 +21,7 @@
 
 <filter-mapping>
    <filter-name>AuthFilter</filter-name>
-   <url-pattern>*.xhtml</url-pattern>
+   <url-pattern>/welcome-page.xhtml</url-pattern>
 </filter-mapping>
 
   <resource-ref>

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -47,7 +48,7 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "INSERT INTO testdb.account_info (username, first_name, last_name, email, salt, password_name) VALUES ( ?, ?, ?, ?, ?, ?);"; //query to database
+			String sql = "INSERT INTO testDB.account_info (username, first_name, last_name, email, salt, password_name, password) VALUES ( ?, ?, ?, ?, ?, ?, ?);"; //query to database
 			
 			myStmt = myConn.prepareStatement(sql);
 			
@@ -58,6 +59,7 @@ public class Connect2DB {
 			myStmt.setString(4, userinfo.getEmail());
 			myStmt.setString(5, strSalt);
 			myStmt.setString(6, hashpassword);
+			myStmt.setString(7, userinfo.getPassword()); //added for testing
 			
 			myStmt.execute();
 		}
@@ -80,7 +82,7 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "SELECT * FROM testdb.account_info WHERE email = ?;"; //query to database
+			String sql = "SELECT * FROM testDB.account_info WHERE email = ?;"; //query to database
 			
 			myStmt = myConn.prepareStatement(sql);
 			
@@ -110,7 +112,7 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;"; //query to database
+			String sql = "SELECT * FROM testDB.account_info WHERE username = ?;"; //query to database
 			
 			myStmt = myConn.prepareStatement(sql);
 			
@@ -138,7 +140,7 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;"; //query to database
+			String sql = "SELECT * FROM testDB.account_info WHERE username = ?;"; //query to database
 			
 			myStmt = myConn.prepareStatement(sql);
 			
@@ -159,6 +161,49 @@ public class Connect2DB {
 			}
 	}
 	
+	public List<RegisterForm> getUser() {
+
+		List<RegisterForm> users = new ArrayList<>();
+
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			myConn = ds.getConnection();
+
+			String sql = "select * from testDB.account_info order by id_num;";
+
+			myStmt = myConn.createStatement();
+
+			myRs = myStmt.executeQuery(sql);
+
+			// process result set
+			while (myRs.next()) {
+				
+				// retrieve data from result set row
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String username = myRs.getString("username");
+				String email = myRs.getString("email");
+				String password = myRs.getString("password");
+				
+				// create new user object
+				RegisterForm tempUsers = new RegisterForm(username, firstName, lastName, email, password);
+
+				// add it to the list of students
+				users.add(tempUsers);
+			}
+			
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close (myConn, myStmt, myRs);
+		}
+		return users;	
+	}
 	
 	private void close(Connection theConn, Statement theStmt) {
 		close(theConn, theStmt, null);
