@@ -19,7 +19,7 @@
 	Register Form <br/><br/><br/>
 	
 	<h:form>
-		<h:message styleClass="error" />
+		<h:messages styleClass="error" />
 		
 		 
 		
@@ -27,7 +27,12 @@
 		<h:inputText 	id="firstname" 
 						label = "First Name"
 						value="#{registerForm.firstname}" 
-						required = "true"/>
+						validatorMessage="Enter a valid name"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
+						
 						
 		<h:message for="firstname" styleclass= "error"></h:message>
 		<br/><br/> 
@@ -36,7 +41,11 @@
 		<h:inputText 	id="lastname" 
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
-						required = "true"/>
+						validatorMessage="Enter a valid name"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
 						
 		<h:message for="lastname" styleclass= "error"></h:message>
 		<br/><br/>
@@ -58,28 +67,34 @@
 		<h:inputText 	id="uname" 
 						label = "Username"
 						value="#{registerForm.uname}" 
-						required = "true"/>
+						validatorMessage="Username starts with a letter and contains only alphanumeric character"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
+						</h:inputText>
 						
 		<h:message for="uname" styleclass= "error"></h:message>
 		<br/><br/>
 		
 		Create Password: 
-		<h:inputSecret 	id="psw" 
+		<h:inputSecret 	id="pwd" 
 						label = "Password"
 						value="#{registerForm.pwd}" 
+						validatorMessage="Minimum eight characters, at least one letter and one number:"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
+						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
 						</h:inputSecret>
 						
-		<h:message for="psw" styleclass= "error"></h:message>
+		<h:message for="pwd" styleclass= "error"></h:message>
 		<br/><br/>
 		
 		Confirm Password: 
-		<h:inputSecret 	id="checkpsw" 
+		<h:inputSecret 	id="checkpwd" 
 						label = "Confirmed Password"
 						value="#{registerForm.checkpwd}" 
 						required = "true"/>
-		<h:message for="checkpsw" styleclass= "error"></h:message>
+		<h:message for="checkpwd" styleclass= "error"></h:message>
 		<br/><br/>
 
 		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
