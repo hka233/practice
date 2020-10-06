@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.sql.DataSource;
 
+import DBSource.DsFactory;
+
 @ManagedBean
 @SessionScoped
 public class UserController {

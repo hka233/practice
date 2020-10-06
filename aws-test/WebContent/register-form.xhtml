@@ -16,7 +16,7 @@
 </h:head>
 
 <h:body>
-	Register Form <br/><br/><br/>
+	Register Form <br/><br/>
 	
 	<h:form>
 		<h:messages styleClass="error" />
@@ -27,39 +27,39 @@
 		<h:inputText 	id="firstname" 
 						label = "First Name"
 						value="#{registerForm.firstname}" 
-						validatorMessage="Enter a valid name"
+						validatorMessage="First Name: Enter a valid first name"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
 						</h:inputText>
 						
 						
-		<h:message for="firstname" styleclass= "error"></h:message>
+		
 		<br/><br/> 
 					
 		Last Name: 
 		<h:inputText 	id="lastname" 
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
-						validatorMessage="Enter a valid name"
+						validatorMessage="Last Name: Enter a valid last name"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
 						</h:inputText>
 						
-		<h:message for="lastname" styleclass= "error"></h:message>
+		
 		<br/><br/>
 		
 		Email Address: 
 		<h:inputText 	id="email" 
 						label= "Email"
 						value="#{registerForm.email}"  
-						validatorMessage="Invalid email format"
+						validatorMessage="Email Address: Invalid email format"
 						required = "true">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</h:inputText>
 						
-		<h:message for="email" styleclass= "error"></h:message>
+		
 									
 		<br/><br/>
 		
@@ -67,26 +67,26 @@
 		<h:inputText 	id="uname" 
 						label = "Username"
 						value="#{registerForm.uname}" 
-						validatorMessage="Username starts with a letter and contains only alphanumeric character"
+						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
 						</h:inputText>
 						
-		<h:message for="uname" styleclass= "error"></h:message>
+		
 		<br/><br/>
 		
 		Create Password: 
 		<h:inputSecret 	id="pwd" 
 						label = "Password"
 						value="#{registerForm.pwd}" 
-						validatorMessage="Minimum eight characters, at least one letter and one number:"
+						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
 						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
 						</h:inputSecret>
 						
-		<h:message for="pwd" styleclass= "error"></h:message>
+		
 		<br/><br/>
 		
 		Confirm Password: 
@@ -94,7 +94,7 @@
 						label = "Confirmed Password"
 						value="#{registerForm.checkpwd}" 
 						required = "true"/>
-		<h:message for="checkpwd" styleclass= "error"></h:message>
+		
 		<br/><br/>
 
 		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
