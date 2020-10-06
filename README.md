@@ -63,21 +63,3 @@ If you cannot meet the deadline, contact the PO and explain what problems you en
 A major goal of this project is to practice finding bugs and other issues on your own and fixing them before submitting a finished product. 
 You can use the same Git repo, make a new one, or add a new branch (your choice).
 
-# Database Parameters
-There are 5 parameters for users - First Name, Last Name, Username, Email, Password
-
-There is only 1 saved users currently:
-
-First Name: Sheldon 
-
-Last Name: Cooper
-
-Username: Sheldor
-
-Email: s.cooperphd@yahoo.com 
-
-Password:BIGbangtheory
-
-
-
-
