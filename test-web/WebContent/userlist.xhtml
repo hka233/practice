@@ -4,21 +4,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 	
-	
 	<h:head>
-		<title>Successful Login </title>
-		
+		<title>List of Users </title>
 	</h:head>
 	<h:body>
-	
-	Welcome!<br/>
-		Your username is #{checkAuthentication.username}<br/>
-		Your password is #{checkAuthentication.password}
-		<h:form>
-		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" /><br/>
-	</h:form>
-	
-	<br/><br/>
 	
 	<h:dataTable value="#{userController.getUsers()}" var="tempUser" border="1">
 		
@@ -61,6 +50,7 @@
 			<!--  the value for each row -->
 			#{tempUser.password}
 		</h:column>
+
 	</h:dataTable>
 	
 	</h:body>
