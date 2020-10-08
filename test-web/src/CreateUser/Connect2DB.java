@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import DBSource.DsFactory;
 import Validation.PassHash;
 /**
  * Class created to send information from RegisterForm

@@ -1,16 +1,22 @@
 package CreateUser;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.sql.DataSource;
+
+import DBSource.DsFactory;
 
 @ManagedBean
 @SessionScoped
@@ -61,6 +67,53 @@ public class UserController {
 		}
 		return users;	
 	}
+	
+	public String loadUser(String user) {
+		//logger.info("loading student: " + registerform);
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testdb.account_info WHERE username = ?;"; //query to database
+			
+			myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1, user);
+			
+			myRs = myStmt.executeQuery();
+			
+			RegisterForm userinfo = null;
+			
+			while (myRs.next()) {
+				// retrieve data from result set row
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String username = myRs.getString("username");
+				String email = myRs.getString("email");
+				String password = myRs.getString("password");
+				
+				userinfo = new RegisterForm(username, firstName, lastName, email, password);
+			}
+			
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Map<String, Object> requestMap = externalContext.getRequestMap();
+			requestMap.put("user", userinfo);
+			
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+		
+		
+		
+		return "update-userinfo.xhtml";
+	}
+	
 	
 	//class to simplify closing connection
 	private void close(Connection theConn, Statement theStmt, ResultSet theRs) {

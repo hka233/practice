@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:a="http://xmlns.jcp.org/jsf/facelets">
+
+
+
+<h:head>
+	<style>
+		.error{color:red}
+	</style>
+
+</h:head>
+
+<h:body>
+	Register Form <br/><br/>
+	
+	<h:form>
+		<h:messages styleClass="error" />
+		
+		 
+		
+		First Name: 
+		<h:inputText 	id="firstname" 
+						label = "First Name"
+						value="#{registerForm.firstname}" 
+						validatorMessage="First Name: Enter a valid first name"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
+						
+						
+		
+		<br/><br/> 
+					
+		Last Name: 
+		<h:inputText 	id="lastname" 
+						label= "Last Name"
+						value="#{registerForm.lastname}" 
+						validatorMessage="Last Name: Enter a valid last name"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
+						
+		
+		<br/><br/>
+		
+		Email Address: 
+		<h:inputText 	id="email" 
+						label= "Email"
+						value="#{registerForm.email}"  
+						validatorMessage="Email Address: Invalid email format"
+						required = "true">
+						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
+						
+		
+									
+		<br/><br/>
+		
+		Create Username: 
+		<h:inputText 	id="uname" 
+						label = "Username"
+						value="#{registerForm.uname}" 
+						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
+						required = "true">
+						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
+						</h:inputText>
+						
+		
+		<br/><br/>
+		
+		Create Password: 
+		<h:inputSecret 	id="pwd" 
+						label = "Password"
+						value="#{registerForm.pwd}" 
+						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
+						required = "true">
+						<f:validateLength minimum="8" maximum="15"/>
+						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
+						</h:inputSecret>
+						
+		
+		<br/><br/>
+		
+		Confirm Password: 
+		<h:inputSecret 	id="checkpwd" 
+						label = "Confirmed Password"
+						value="#{registerForm.checkpwd}" 
+						required = "true"/>
+		
+		<br/><br/>
+
+		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
+		  
+
+	</h:form>
+	
+</h:body>
+</html>
