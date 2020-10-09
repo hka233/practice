@@ -114,7 +114,7 @@ public class UserController {
 		return "update-userinfo.xhtml";
 	}
 	
-	public void updateStudent(RegisterForm registerform) throws Exception {
+	public void updateUser(RegisterForm registerform) throws Exception {
 
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
