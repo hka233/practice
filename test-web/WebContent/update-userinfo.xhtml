@@ -16,7 +16,7 @@
 </h:head>
 
 <h:body>
-	Register Form <br/><br/>
+	Update Info <br/><br/>
 	
 	<h:form>
 		<h:messages styleClass="error" />
@@ -26,7 +26,7 @@
 		First Name: 
 		<h:inputText 	id="firstname" 
 						label = "First Name"
-						value="#{registerForm.firstname}" 
+						value="#{user.firstname}" 
 						validatorMessage="First Name: Enter a valid first name"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
@@ -40,7 +40,7 @@
 		Last Name: 
 		<h:inputText 	id="lastname" 
 						label= "Last Name"
-						value="#{registerForm.lastname}" 
+						value="#{user.lastname}" 
 						validatorMessage="Last Name: Enter a valid last name"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
@@ -53,7 +53,7 @@
 		Email Address: 
 		<h:inputText 	id="email" 
 						label= "Email"
-						value="#{registerForm.email}"  
+						value="#{user.email}"  
 						validatorMessage="Email Address: Invalid email format"
 						required = "true">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -66,7 +66,7 @@
 		Create Username: 
 		<h:inputText 	id="uname" 
 						label = "Username"
-						value="#{registerForm.uname}" 
+						value="#{user.uname}" 
 						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
 						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
@@ -79,7 +79,7 @@
 		Create Password: 
 		<h:inputSecret 	id="pwd" 
 						label = "Password"
-						value="#{registerForm.pwd}" 
+						value="#{user.pwd}" 
 						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
@@ -92,12 +92,12 @@
 		Confirm Password: 
 		<h:inputSecret 	id="checkpwd" 
 						label = "Confirmed Password"
-						value="#{registerForm.checkpwd}" 
+						value="#{user.checkpwd}" 
 						required = "true"/>
 		
 		<br/><br/>
 
-		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
+		<h:commandButton value="Save" action="#{registerForm.checkPass(registerForm)}" />
 		  
 
 	</h:form>

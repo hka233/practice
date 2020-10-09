@@ -28,6 +28,7 @@
 		Your password is #{checkAuthentication.password}
 		<h:form>
 		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" /><br/>
+		<h:commandButton value="Update User Info" action="#{userController.loadUser(checkAuthentication.username)}" /><br/>
 	</h:form>
 	
 	<br/><br/>

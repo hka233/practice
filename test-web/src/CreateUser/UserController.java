@@ -114,6 +114,45 @@ public class UserController {
 		return "update-userinfo.xhtml";
 	}
 	
+	public void updateStudent(RegisterForm registerform) throws Exception {
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+
+			String sql = "update testdb.account_info "
+						+ " set username=?, first_name=?, last_name=?, email=?, salt=?. password_name=?, password=?"
+						+ " where username=?";
+
+			myStmt = myConn.prepareStatement(sql);
+			
+			String salt = null;
+			String hashedpass = null;
+			
+			// set params
+			myStmt.setString(1, registerform.getUname());
+			myStmt.setString(2, registerform.getFirstname());
+			myStmt.setString(3, registerform.getLastname());
+			myStmt.setString(4, registerform.getEmail());
+			myStmt.setString(5, salt);
+			myStmt.setString(6, hashedpass);
+			myStmt.setString(7, registerform.getPassword());
+			myStmt.setString(8, registerform.getUname());
+			
+			myStmt.execute();
+		}
+		finally {
+			close (myConn, myStmt);
+		}
+		
+	}
+	
+	private void close(Connection theConn, Statement theStmt) {
+		close(theConn, theStmt, null);
+	}
 	
 	//class to simplify closing connection
 	private void close(Connection theConn, Statement theStmt, ResultSet theRs) {
