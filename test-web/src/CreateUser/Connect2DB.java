@@ -154,6 +154,7 @@ public class Connect2DB {
 			rform.setFirstname(myRs.getString(3));
 			rform.setLastname(myRs.getString(4));
 			rform.setEmail(myRs.getString(5));
+			rform.setPassword(myRs.getString(7));
 			}
 			return rform;
 		}
