@@ -111,10 +111,11 @@
 	<div class= "login" >
 	<p class="sign" align="center">Sign in</p>
 
-		<p:messages globalOnly="true" style="color:red;margin:4px;" /><br/><br/>
+		<p:messages globalOnly="true"  /><br/><br/>
 		
         <p:inputText id="username" class="user " type="text" align="center" value="#{checkAuthentication.username}"
 					pt:placeholder="Type in Username" /> 
+					<p:message for="username" styleclass= "error"></p:message>
  
         <p:password id="password" class="pass" type="password" align="center" value="#{checkAuthentication.password}"
         			pt:placeholder="Type in Password"/>

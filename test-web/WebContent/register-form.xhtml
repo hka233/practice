@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/facelets">
 
 
@@ -15,23 +16,23 @@
 
 	
 		<h:message styleClass="error" />
-		<style type="text/css">
+	<style type="text/css">
    
    	.register-form {
    		background-color: #FFFFFF;
-        width: 600px;
-        height: 400px;
+        width: 800px;
+        height: 800px;
         margin: 7em auto;
         border-radius: 1.5em;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
    	}
    	
    	body {
-   		background-color: #F3EBF6;
+   		background-color: #ddf5dc;
    		font-family: 'Ubuntu', sans-serif;
    	}
    	
-   	.sign {
+   	.rform {
         padding-top: 30px;
         color: #8C55AA;
         font-family: 'Ubuntu', sans-serif;
@@ -40,8 +41,15 @@
         
     }
     
+    .info {
+        padding-left: 30px;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 14px;
+        
+    }
+    
    	.user {
-   		width: 76%;
+   		width: 40%;
     	color: rgb(38, 50, 56);
     	font-weight: 700;
     	font-size: 14px;
@@ -60,7 +68,7 @@
     	font-family: 'Ubuntu', sans-serif;
    	}
    	
-   	.pass {
+   	.info {
    		width: 76%;
     	color: rgb(38, 50, 56);
     	font-weight: 700;
@@ -74,7 +82,7 @@
     	box-sizing: border-box;
     	border: 2px solid rgba(0, 0, 0, 0.02);
     	margin-bottom: 50px;
-    	margin-left: 46px;
+    	margin-left: 96px;
     	text-align: center;
     	margin-bottom: 27px;
     	font-family: 'Ubuntu', sans-serif;
@@ -91,86 +99,104 @@
         padding-bottom: 10px;
         padding-top: 10px;
         font-family: 'Ubuntu', sans-serif;
-        margin-left: 35%;
+        margin-left: 42%;
         font-size: 13px;
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
    	
+   	.login {
+   	padding-left: 50px;
+   	}
         
    </style>
    
 </h:head>
 
 <h:body>
+<div class= "register-form" >
 	<h:form>
-	<div class= "register-form" >
-	Register Form <br/><br/><br/>
+	
+	<p class="rform" align="center">Register Form </p> <br/>
 		
-		First Name: 
-		<h:inputText 	id="firstname" 
+		<p:messages styleClass="error" /><br/><br/>
+		
+		<p:inputText 	id="firstname" 
+						class="user " 
+						type="text" 
+						align="center"
 						label = "First Name"
 						value="#{registerForm.firstname}" 
+						pt:placeholder="First Name"
 						required = "true"/>
-						
-		<h:message for="firstname" styleclass= "error"></h:message>
-		<br/><br/> 
+		
 					
-		Last Name: 
-		<h:inputText 	id="lastname" 
+		<p:inputText 	id="lastname" 
+						class="user " 
+						type="text" 
+						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
+						pt:placeholder="Last Name"
 						required = "true"/>
 						
-		<h:message for="lastname" styleclass= "error"></h:message>
-		<br/><br/>
+		<br/>
 		
-		Email Address: 
-		<h:inputText 	id="email" 
+		<p:inputText 	id="email" 
+						class="info " 
+						type="text" 
+						align="center"
 						label= "Email"
 						value="#{registerForm.email}"  
+						pt:placeholder="Email"
 						validatorMessage="Invalid email format"
 						required = "true">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-						</h:inputText>
-						
-		<h:message for="email" styleclass= "error"></h:message>
+						</p:inputText>
 									
-		<br/><br/>
+		<br/>
 		
-		Create Username: 
-		<h:inputText 	id="uname" 
+		<p:inputText 	id="uname" 
+						class="info " 
+						type="text" 
+						align="center" 
 						label = "Username"
 						value="#{registerForm.uname}" 
+						pt:placeholder="Type in Username"
 						required = "true"/>
 						
-		<h:message for="uname" styleclass= "error"></h:message>
-		<br/><br/>
+		<br/>
 		
-		Create Password: 
-		<h:inputSecret 	id="psw" 
+		<p:password 	id="psw" 
+						class="info " 
+						type="text" 
+						align="center" 
 						label = "Password"
 						value="#{registerForm.pwd}" 
+						pt:placeholder="New Password"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
-						</h:inputSecret>
-						
-		<h:message for="psw" styleclass= "error"></h:message>
-		<br/><br/>
+						</p:password>
+
+		<br/>
 		
-		Confirm Password: 
-		<h:inputSecret 	id="checkpsw" 
+		<p:password 	id="checkpsw" 
+						class="info " 
+						type="text" 
+						align="center"
 						label = "Confirmed Password"
-						value="#{registerForm.checkpwd}" 
+						value="#{registerForm.checkpwd}"
+						pt:placeholder="Confirm Password"
 						required = "true"/>
-		<h:message for="checkpsw" styleclass= "error"></h:message>
+
 		<br/><br/>
 
-		<h:commandButton value="Submit" action="#{registerForm.checkPass(registerForm)}" />
-		  </div>
+		<h:commandButton value="Submit" class="submit" action="#{registerForm.checkPass(registerForm)}" /><br/><br/>
+		 
 	
 	</h:form>
 	
-	<h:button value="Return to Login" outcome="login-page?faces-redirect=true" />
-	
+	<p class="login"><h:link value="Return to Login" outcome="login-page?faces-redirect=true" /></p>
+	 </div>
 </h:body>
+
 </html>

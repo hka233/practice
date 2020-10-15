@@ -19,26 +19,104 @@
 			}
 		}
 		</script>
-		
+		<style type="text/css">
+   
+   	.register-form {
+   		background-color: #FFFFFF;
+        margin: 1%;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+   	}
+   	
+   	body {
+   		background-color: #fc5858;
+   		font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.title {
+        padding-top: 40px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+        padding-left: 2%;
+        
+    }
+    
+    .inform {
+        padding-left: 30px;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 20px;
+        padding-left: 50px;
+    }
+   	
+   	.button {
+    	position:fixed;
+   		right:100px;
+   		top:40px;
+    }
+    
+    .link{
+		position:fixed;
+   		right:50px;
+   		top:40px;
+	}
+	
+    .update {
+    	position:fixed;
+   		right:50px;
+   		top:60px;
+    }
+   	
+	.respass {
+    	position:fixed;
+   		right:50px;
+   		top:80px;
+    }
+   	
+   .table {
+   	max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+   }
+  .col-1 {
+    flex-basis: 15%;
+  }
+  .col-2 {
+    flex-basis: 15%;
+  }
+  .col-3 {
+    flex-basis: 15%;
+  }
+  .col-4 {
+    flex-basis: 40%;
+  }
+  .col-5 {
+    flex-basis: 15%;
+  }
+  
+   </style>
 	</h:head>
 	<h:body>
-	
-	Welcome!<br/>
-		Your username is #{checkAuthentication.username}<br/>
-		Your password is #{checkAuthentication.password}
+	<div class= "register-form" >
+	<p class="title" >Welcome #{checkAuthentication.username}! </p> <br/>
+		<p class="inform" > Your password is #{checkAuthentication.password} </p>
 		<h:form>
-		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" /><br/>
-		<h:commandButton value="Update User Info" action="#{userController.loadUser(checkAuthentication.username)}" /><br/>
-		<h:commandButton value="Change Password" action="#{userController.navigateResetPass}" /><br/>
+		
+		<h:commandLink class="link" value="Logout" action="#{checkAuthentication.logout}" /><br/>
+		<h:commandLink class = "update" value="Update User Info" action="#{userController.loadUser(checkAuthentication.username)}" /><br/>
+		<h:commandLink class = "respass" value="Change Password" action="#{userController.navigateResetPass}" /><br/>
 	</h:form>
 	
 	<br/><br/>
-	
+	<div class="table" >
 	<h:dataTable value="#{userController.getUsers()}" var="tempUser" border="1">
 		
 		<h:column>
 			<!-- the column header -->
-			<f:facet name="header">First Name</f:facet>
+			<div class="col col-1"><f:facet name="header">First Name</f:facet></div>
 			
 			<!--  the value for each row -->
 			#{tempUser.firstname}
@@ -46,7 +124,7 @@
 
 		<h:column>
 			<!-- the column header -->
-			<f:facet name="header">Last Name</f:facet>
+			<div class="col col-2"><f:facet name="header">Last Name</f:facet></div>
 			
 			<!--  the value for each row -->
 			#{tempUser.lastname}
@@ -54,7 +132,7 @@
 
 		<h:column>
 			<!-- the column header -->
-			<f:facet name="header">Username</f:facet>
+			<div class="col col-3"><f:facet name="header">Username</f:facet></div>
 			
 			<!--  the value for each row -->
 			#{tempUser.uname}
@@ -62,7 +140,7 @@
 		
 		<h:column>
 			<!-- the column header -->
-			<f:facet name="header">Email</f:facet>
+			<div class="col col-4"><f:facet name="header">Email</f:facet></div>
 			
 			<!--  the value for each row -->
 			#{tempUser.email}
@@ -70,16 +148,17 @@
 		
 		<h:column>
 			<!-- the column header -->
-			<f:facet name="header">Password</f:facet>
+			<div class="col col-5"><f:facet name="header">Password</f:facet></div>
 			
 			<!--  the value for each row -->
 			#{tempUser.password}
 		</h:column>
-	</h:dataTable>
+	</h:dataTable><br/>
+	</div>
 	
 	<script type="text/javascript">
 	 backPressed();
 	</script>
-	
+	</div>
 	</h:body>
 </html>
