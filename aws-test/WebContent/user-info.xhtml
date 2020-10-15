@@ -7,20 +7,119 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
+<style type="text/css">
+   
+   	.confirm-info {
+   		background-color: #FFFFFF;
+        width: 400px;
+        height: 550px;
+        margin: 7em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+   	}
+   	
+   	body {
+   		background-color: #ddf5dc;
+   		font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.rform {
+        padding-top: 30px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+        
+    }
+    
+    .inform {
+        padding-left: 30px;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 18px;
+        
+    }
+    
+   	.user {
+   		width: 40%;
+    	color: rgb(38, 50, 56);
+    	font-weight: 700;
+    	font-size: 14px;
+    	letter-spacing: 1px;
+    	background: rgba(136, 126, 126, 0.04);
+    	padding: 10px 20px;
+    	border: none;
+    	border-radius: 20px;
+    	outline: none;
+    	box-sizing: border-box;
+    	border: 2px solid rgba(0, 0, 0, 0.02);
+    	margin-bottom: 50px;
+    	margin-left: 46px;
+    	text-align: center;
+    	margin-bottom: 27px;
+    	font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.info {
+   		width: 76%;
+    	color: rgb(38, 50, 56);
+    	font-weight: 700;
+    	font-size: 14px;
+    	letter-spacing: 1px;
+    	background: rgba(136, 126, 126, 0.04);
+    	padding: 10px 20px;
+    	border: none;
+    	border-radius: 20px;
+    	outline: none;
+    	box-sizing: border-box;
+    	border: 2px solid rgba(0, 0, 0, 0.02);
+    	margin-bottom: 50px;
+    	margin-left: 96px;
+    	text-align: center;
+    	margin-bottom: 27px;
+    	font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.submit {
+      cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 42%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+   	
+   	.login {
+   	padding-left: 50px;
+   	}
+        
+   </style>
 <title>User Info</title>
 </h:head>
 <h:body>
-       Username:#{registerForm.uname}
-<br /><br />
-       First Name:#{registerForm.firstname}
-<br /><br />
-       Last Name:#{registerForm.lastname}
-<br /><br />
-       Email:#{registerForm.email}
-<br /><br />
-       Password:#{registerForm.pwd}
-       <br /><br /> 
-	<h:button value="Return to Login" outcome="login-page?faces-redirect=true" />
+<h:form>
+<div class= "confirm-info" >
+<p class="rform" align="center">Created User </p> <br/>
+       <p class="inform" > Username:   #{registerForm.uname} </p>
+<br />
+       <p class="inform" > First Name: #{registerForm.firstname} </p>
+<br />
+       <p class="inform" > Last Name:  #{registerForm.lastname} </p>
+<br />
+       <p class="inform" > Email:      #{registerForm.email} </p>
+<br />
+       <p class="inform" > Password:   #{registerForm.pwd} </p>
+       
+      <br />
+	<h:commandButton class="submit" value="Return to Login" action="#{registerForm.navigateUserInfo(registerForm)}" />
+	</div>
+	</h:form>
 </h:body>
 </html>
 

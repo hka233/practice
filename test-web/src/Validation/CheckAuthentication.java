@@ -21,7 +21,7 @@ import javax.servlet.ServletException;
 public class CheckAuthentication {
 
 	private static String username;
-	private String password;
+	private static String password;
 		
 	public CheckAuthentication() {
 	

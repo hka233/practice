@@ -14,14 +14,12 @@
 		.error{color:red}
 	</style>
 
-	
-		<h:message styleClass="error" />
-	<style type="text/css">
+<style type="text/css">
    
    	.register-form {
    		background-color: #FFFFFF;
-        width: 800px;
-        height: 800px;
+        width: 600px;
+        height: 750px;
         margin: 7em auto;
         border-radius: 1.5em;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
@@ -41,7 +39,7 @@
         
     }
     
-    .info {
+    .inform {
         padding-left: 30px;
         font-family: 'Ubuntu', sans-serif;
         font-size: 14px;
@@ -49,7 +47,7 @@
     }
     
    	.user {
-   		width: 40%;
+   		width: 70%;
     	color: rgb(38, 50, 56);
     	font-weight: 700;
     	font-size: 14px;
@@ -82,7 +80,7 @@
     	box-sizing: border-box;
     	border: 2px solid rgba(0, 0, 0, 0.02);
     	margin-bottom: 50px;
-    	margin-left: 96px;
+    	margin-left: 45px;
     	text-align: center;
     	margin-bottom: 27px;
     	font-family: 'Ubuntu', sans-serif;
@@ -99,7 +97,7 @@
         padding-bottom: 10px;
         padding-top: 10px;
         font-family: 'Ubuntu', sans-serif;
-        margin-left: 42%;
+        margin-left: 38%;
         font-size: 13px;
         box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     }
@@ -109,106 +107,88 @@
    	}
         
    </style>
-   
+
 </h:head>
 
 <h:body>
-<div class= "register-form" >
-	<h:form>
 	
-	<p class="rform" align="center">Register Form </p> <br/>
+	<h:form>
+	<div class= "register-form" >
+		<p class="rform" align="center">Update User Info </p> <br/><br/>
+		<p:messages styleClass="error" />
 		
-		<p:messages styleClass="error" /><br/><br/>
+		 
 		
-		<p:inputText 	id="firstname" 
-						class="user " 
-						type="text" 
+		<p class="inform" >First Name: </p>
+		<h:inputText 	id="firstname" 
+						class="user" 
+						type= "text" 
 						align="center"
 						label = "First Name"
-						value="#{registerForm.firstname}"
-						validatorMessage="First Name: Enter a valid first name" 
-						pt:placeholder="First Name"
-						required = "true"/>
+						value="#{registerForm.firstname}" 
+						validatorMessage="First Name: Enter a valid first name"
+						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
+						
+						
 		
+		<br/>
 					
-		<p:inputText 	id="lastname" 
-						class="user " 
-						type="text" 
+		<p class="inform" > Last Name: </p>
+		<h:inputText 	id="lastname" 
+						class="user" 
+						type= "text" 
 						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
 						validatorMessage="Last Name: Enter a valid last name"
-						pt:placeholder="Last Name"
-						required = "true"/>
+						required = "true">
 						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
+						</h:inputText>
 						
+		
 		<br/>
 		
-		<p:inputText 	id="email" 
-						class="info " 
-						type="text" 
+		<p class="inform" > Email Address: </p>
+		<h:inputText 	id="email" 
+						class="user" 
+						type= "text" 
 						align="center"
 						label= "Email"
 						value="#{registerForm.email}"  
-						pt:placeholder="Email"
-						validatorMessage="Invalid email format"
+						validatorMessage="Email Address: Invalid email format"
 						required = "true">
 						<f:validateRegex pattern="^(?![0-9]+@)^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-						</p:inputText>
+						</h:inputText>
+						
+		
 									
 		<br/>
 		
-		<p:inputText 	id="uname" 
-						class="info " 
-						type="text" 
-						align="center" 
+		<p class="inform" > Username: </p>
+		<h:inputText 	id="uname" 
+						class="user" 
+						type= "text" 
+						align="center"
 						label = "Username"
 						value="#{registerForm.uname}" 
-						validatorMessage="Username: Starts with a letter and contains only alphanumeric character(minimum of 2 character)"
-						pt:placeholder="Type in Username"
+						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
 						required = "true">
 						<f:validateLength minimum="2" maximum="15"/>
 						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
-						</p:inputText>
+						</h:inputText>
 						
-		<br/>
 		
-		<p:password 	id="psw" 
-						class="info " 
-						type="text" 
-						align="center" 
-						label = "Password"
-						value="#{registerForm.pwd}" 
-						pt:placeholder="Create Password"
-						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
-						required = "true">
-						<f:validateLength minimum="8" maximum="15"/>
-						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
-						</p:password>
-
-		<br/>
-		
-		<p:password 	id="checkpsw" 
-						class="info " 
-						type="text" 
-						align="center"
-						label = "Confirmed Password"
-						value="#{registerForm.checkpwd}"
-						pt:placeholder="Confirm Password"
-						required = "true"/>
-
 		<br/><br/>
+		
 
-		<h:commandButton value="Submit" class="submit" action="#{registerForm.checkPass(registerForm)}" /><br/><br/>
-		 
-	
+		<h:commandButton value="Save" class="submit" action="#{userController.updateUserInfo(registerForm, checkAuthentication.getUsername())}" />
+		<p class="login"><h:link value="Return to Home" outcome="welcome-page?faces-redirect=true" /></p>
+	</div>
 	</h:form>
 	
-	<p class="login"><h:link value="Return to Login" outcome="login-page?faces-redirect=true" /></p>
-	 </div>
 </h:body>
-
 </html>

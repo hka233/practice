@@ -20,8 +20,8 @@ import javax.servlet.ServletException;
 @ManagedBean
 public class CheckAuthentication {
 
-	private String username;
-	private String password;
+	private static String username;
+	private static String password;
 		
 	public CheckAuthentication() {
 	

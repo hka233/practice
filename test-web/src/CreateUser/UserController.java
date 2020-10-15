@@ -27,6 +27,7 @@ public class UserController {
 	
 	DataSource ds = DsFactory.getDataSource();
 	
+	//method used to create the datatable with all user info
 	public List<RegisterForm> getUsers() {
 
 		List<RegisterForm> users = new ArrayList<>();
@@ -71,6 +72,7 @@ public class UserController {
 		return users;	
 	}
 	
+	//Displays the loggedin user credentials in text box so that it can be easily updated by user
 	public String loadUser(String user) {
 		//logger.info("loading student: " + registerform);
 		Connection myConn = null;
@@ -117,57 +119,66 @@ public class UserController {
 		return "update-userinfo.xhtml";
 	}
 	
+	//Method used to update user information, it also chacks if username or email already exists
 	public void updateUserInfo(RegisterForm registerform , String username) throws Exception {
-
+		FacesContext context = FacesContext.getCurrentInstance();
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
-			myConn = ds.getConnection();
-
-			String sql = "update testdb.account_info "
-						+ " set username=?, first_name=?, last_name=?, email=?"
-						+ " where username=?";
-
-			myStmt = myConn.prepareStatement(sql);
+		RegisterForm regForm = new RegisterForm();
+		
+		if (!(regForm.checkUser(registerform))) {
+			if (!regForm.checkEmail(registerform)) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+				myConn = ds.getConnection();
+	
+				String sql = "update testdb.account_info "
+							+ " set username=?, first_name=?, last_name=?, email=?"
+							+ " where username=?";
+	
+				myStmt = myConn.prepareStatement(sql);
 			
-			String salt = null;
-			String hashedpass = null;
-			
-			// set params
-			myStmt.setString(1, registerform.getUname());
-			myStmt.setString(2, registerform.getFirstname());
-			myStmt.setString(3, registerform.getLastname());
-			myStmt.setString(4, registerform.getEmail());
-			//myStmt.setString(5, registerform.getUname());
-			myStmt.setString(5, username);
-			
-			myStmt.execute();
-					
-			CheckAuthentication checkauth = new CheckAuthentication();
-			//checkauth.setUsername(registerform.getUname());
-			checkauth.setUsername(registerform.getUname());
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("User info updated"));
+				
+				// set params
+				myStmt.setString(1, registerform.getUname());
+				myStmt.setString(2, registerform.getFirstname());
+				myStmt.setString(3, registerform.getLastname());
+				myStmt.setString(4, registerform.getEmail());
+				//myStmt.setString(5, registerform.getUname());
+				myStmt.setString(5, username);
+				
+				myStmt.execute();
+						
+				CheckAuthentication checkauth = new CheckAuthentication();
+				//checkauth.setUsername(registerform.getUname());
+				checkauth.setUsername(registerform.getUname());
+				
+				
+				context.addMessage(null, new FacesMessage("User info updated"));
+			}
+			finally {
+				close (myConn, myStmt);
+			}
 		}
-		finally {
-			close (myConn, myStmt);
-		}
+			else
+				context.addMessage(null, new FacesMessage("This email is already registered"));
+		} else
+			context.addMessage(null, new FacesMessage("This username is taken"));
+			
 		
 	}
-	
+	//Used to navigate to password reset page
 	public void navigateResetPass() {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
         try {
-			context.getExternalContext().redirect("password-reset.xhtml");  //redirects them to login page
+			context.getExternalContext().redirect("password-reset.xhtml");  //redirects them to pass reset page
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	//Method used to update password information
 	public void updateUserPass(String username, String curPass, String newPass, String confPass) throws Exception {
 
 		Connection myConn = null;
@@ -175,7 +186,7 @@ public class UserController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		DbConnect dbConnect = new DbConnect();
 		
-		if (dbConnect.getPass(username, curPass)) {
+		if (dbConnect.getPass(username, curPass)) {		//check typed password to DB password
 			if (newPass.equals(confPass)) {
 				try {
 					byte[] salt = PassHash.getSalt();
@@ -198,6 +209,11 @@ public class UserController {
 					myStmt.setString(4, username);
 					
 					myStmt.execute();
+					
+					CheckAuthentication checkauth = new CheckAuthentication();
+					//checkauth.setUsername(registerform.getUname());
+					checkauth.setPassword(newPass);
+					
 					context.addMessage(null, new FacesMessage("Password has been updated"));
 				}
 				finally {

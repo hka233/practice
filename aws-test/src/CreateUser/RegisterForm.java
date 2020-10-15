@@ -48,6 +48,8 @@ public class RegisterForm implements Serializable {
 		return chkemail;
 	}
 	
+	
+	
 	//checks if username is already taken
 	public boolean checkUser(RegisterForm registerForm)  {
 		Connect2DB connect2DB = new Connect2DB();
@@ -64,17 +66,18 @@ public class RegisterForm implements Serializable {
 	public String checkPass(RegisterForm registerForm) {
 		Connect2DB connect2DB = new Connect2DB();
 		FacesContext context = FacesContext.getCurrentInstance();
-		if (!checkUser(registerForm)) {
-			if (!checkEmail(registerForm)) {
+		if (!checkUser(registerForm)) { 		//checks if user exists in DB
+			if (!checkEmail(registerForm)) {	//checks if email exists in DB
 				if (pwd.equals(checkpwd)) {
 					this.password = pwd;
 					try {
 						connect2DB.addUser(registerForm);
+						
 						return "user-info?faces-redirect=true";
-				
+						
 					} catch (Exception e) {
 						e.printStackTrace();
-					}
+					} 
 				}	
 				else
 					context.addMessage(null, new FacesMessage("Passwords do not match"));
@@ -88,11 +91,29 @@ public class RegisterForm implements Serializable {
 		return null;
 	}
 	
+	//Used to redirect to user-info page, and to erase all input field when returning to login page
+	public void navigateUserInfo(RegisterForm registerForm) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+        try {
+			context.getExternalContext().redirect("login-page.xhtml");  //redirects them to login page
+			//This clears out the input field after a successful submission
+			registerForm.setFirstname(null); 
+			registerForm.setLastname(null);
+			registerForm.setUname(null);
+			registerForm.setEmail(null);
+			registerForm.setPwd(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//Method to redirect user to register page when "sign up" is clicked
 	public void navigateRegister() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			context.getExternalContext().redirect("register-form.xhtml");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

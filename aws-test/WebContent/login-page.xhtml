@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/facelets">
 
 
@@ -15,30 +16,117 @@
             window.history.forward(); 
         } 
     </script> 
+   
+	<style type="text/css">
+   
+   	.login {
+   		background-color: #FFFFFF;
+        width: 400px;
+        height: 400px;
+        margin: 7em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+   	}
+   	
+   	body {
+   		background-color: #F3EBF6;
+   		font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.sign {
+        padding-top: 30px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+        
+    }
+    
+   	.user {
+   		width: 76%;
+    	color: rgb(38, 50, 56);
+    	font-weight: 700;
+    	font-size: 14px;
+    	letter-spacing: 1px;
+    	background: rgba(136, 126, 126, 0.04);
+    	padding: 10px 20px;
+    	border: none;
+    	border-radius: 20px;
+    	outline: none;
+    	box-sizing: border-box;
+    	border: 2px solid rgba(0, 0, 0, 0.02);
+    	margin-bottom: 50px;
+    	margin-left: 46px;
+    	text-align: center;
+    	margin-bottom: 27px;
+    	font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.pass {
+   		width: 76%;
+    	color: rgb(38, 50, 56);
+    	font-weight: 700;
+    	font-size: 14px;
+    	letter-spacing: 1px;
+    	background: rgba(136, 126, 126, 0.04);
+    	padding: 10px 20px;
+    	border: none;
+    	border-radius: 20px;
+    	outline: none;
+    	box-sizing: border-box;
+    	border: 2px solid rgba(0, 0, 0, 0.02);
+    	margin-bottom: 50px;
+    	margin-left: 46px;
+    	text-align: center;
+    	margin-bottom: 27px;
+    	font-family: 'Ubuntu', sans-serif;
+   	}
+   	
+   	.submit {
+      cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 35%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+   	
+        
+   </style>
+	
 
 </h:head>
 
 <h:body>
-	Login Page <br/><br/><br/>
+	
 	
 	<h:form>
-	
-		<h:messages globalOnly="true" style="color:red;margin:8px;" />
+	<div class= "login" >
+	<p class="sign" align="center">Sign in</p>
+
+		<p:messages globalOnly="true"  /><br/><br/>
 		
-		Username: 
-		<h:inputText id="username" value="#{checkAuthentication.username}"
-					pt:placeholder="Type in Username" />
-					<br/><br/> 
-					
-		Password: 
-		<h:inputSecret id="password" value="#{checkAuthentication.password}"
-					pt:placeholder="Type in Password"/>
-					<br/><br/>
-
-		      <h:commandButton value="Submit" action="#{checkAuthentication.checkAuth}" />
-		      <br/><br/>
-		      <h:commandButton value="Sign Up"  action="#{registerForm.navigateRegister}"/>
-
+        <p:inputText id="username" class="user " type="text" align="center" value="#{checkAuthentication.username}"
+					pt:placeholder="Type in Username" /> 
+					<p:message for="username" styleclass= "error"></p:message>
+ 
+        <p:password id="password" class="pass" type="password" align="center" value="#{checkAuthentication.password}"
+        			pt:placeholder="Type in Password"/>
+        <div class = "button" >			
+	        <h:commandButton class="submit"  value="Sign in"  action="#{checkAuthentication.checkAuth}" /> <br/>
+			    
+			<p class="signup" align="center"><h:commandLink value="Sign Up"  action="#{registerForm.navigateRegister}"/></p>
+		</div>
+    
+    </div>
+	 
 	</h:form>
 	
 	<script>

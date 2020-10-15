@@ -23,6 +23,14 @@
    <filter-name>AuthFilter</filter-name>
    <url-pattern>/welcome-page.xhtml</url-pattern>
 </filter-mapping>
+<filter-mapping>
+   <filter-name>AuthFilter</filter-name>
+   <url-pattern>/update-userinfo.xhtml</url-pattern>
+</filter-mapping>
+<filter-mapping>
+   <filter-name>AuthFilter</filter-name>
+   <url-pattern>/password-reset.xhtml</url-pattern>
+</filter-mapping>
 
   <resource-ref>
   	<description>Account Info DataSource </description>
