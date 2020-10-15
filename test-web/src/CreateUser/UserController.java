@@ -1,5 +1,6 @@
 package CreateUser;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,6 +156,16 @@ public class UserController {
 			close (myConn, myStmt);
 		}
 		
+	}
+	
+	public void navigateResetPass() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+        try {
+			context.getExternalContext().redirect("password-reset.xhtml");  //redirects them to login page
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void updateUserPass(String username, String curPass, String newPass, String confPass) throws Exception {

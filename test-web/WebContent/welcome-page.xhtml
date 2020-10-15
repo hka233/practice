@@ -29,6 +29,7 @@
 		<h:form>
 		<h:commandButton value="Logout" action="#{checkAuthentication.logout}" /><br/>
 		<h:commandButton value="Update User Info" action="#{userController.loadUser(checkAuthentication.username)}" /><br/>
+		<h:commandButton value="Change Password" action="#{userController.navigateResetPass}" /><br/>
 	</h:form>
 	
 	<br/><br/>

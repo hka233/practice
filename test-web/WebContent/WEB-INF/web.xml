@@ -26,6 +26,10 @@
    <filter-name>AuthFilter</filter-name>
    <url-pattern>/update-userinfo.xhtml</url-pattern>
 </filter-mapping>
+<filter-mapping>
+   <filter-name>AuthFilter</filter-name>
+   <url-pattern>/password-reset.xhtml</url-pattern>
+</filter-mapping>
 
   <context-param>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
