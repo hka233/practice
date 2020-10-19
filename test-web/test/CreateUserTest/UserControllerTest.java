@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -51,6 +53,7 @@ public class UserControllerTest {
 	@Mock private Statement statement;
 	@Mock private PreparedStatement preparedStatement;
 	@Mock private ResultSet resultSet;
+	@Mock private RegisterForm registerform;
 	
 	
 	
@@ -68,8 +71,8 @@ public class UserControllerTest {
 		user1 = new RegisterForm();
 		user1.setFirstname("Sheldon");
 		user1.setLastname("Cooper");
-		user1.setUname("Sheldor");
-		user1.setEmail("s.cooperphd@yahoo.com");
+		user1.setUname("Sheldr");
+		user1.setEmail("s.cooperphd@yahoo.co");
 		user1.setPassword("BIGbangtheory");
 		
 		user2 = new RegisterForm();
@@ -90,6 +93,7 @@ public class UserControllerTest {
 		testUsers.add(user1);
 		testUsers.add(user2);
 		testUsers.add(user3);
+		
 		
 	}
 	
@@ -112,11 +116,17 @@ public class UserControllerTest {
 	
 	@Test
 	public void loadUserTest() throws SQLException {
+		FacesContext context = ContextMocker.mockFacesContext();
+		when(resultSet.next()).thenReturn(true).thenReturn(false);
 		when(resultSet.getString("first_name")).thenReturn(user1.getFirstname());
         when(resultSet.getString("last_name")).thenReturn(user1.getLastname());
         when(resultSet.getString("username")).thenReturn(user1.getUname());
         when(resultSet.getString("email")).thenReturn(user1.getEmail());
         when(resultSet.getString("password")).thenReturn(user1.getPassword());
+        Map<String, Object> session = new HashMap<String, Object>(); 
+        ExternalContext ext = mock(ExternalContext.class);
+        when(ext.getRequestMap()).thenReturn(session);
+        when(context.getExternalContext()).thenReturn(ext);
         
 		String user = "sheldor";
 		String link = "random";
@@ -127,6 +137,8 @@ public class UserControllerTest {
 	
 	@Test
 	public void updateUserInfoTest() throws Exception {
+		when(registerform.checkUser(user1)).thenReturn(false);
+		when(registerform.checkEmail(user1)).thenReturn(false);
 		doNothing().when(preparedStatement).setString(1, "first_name");
 		doNothing().when(preparedStatement).setString(2, "last_name");
 		doNothing().when(preparedStatement).setString(3, "username");
@@ -142,13 +154,15 @@ public class UserControllerTest {
 	@Test
 	public void updateUserPassTest() throws Exception {
 		when(dbconnect.getPass(anyString(), anyString())).thenReturn(true);
+		FacesContext context = ContextMocker.mockFacesContext();
 		doNothing().when(preparedStatement).setString(1, "first_name");
 		doNothing().when(preparedStatement).setString(2, "last_name");
 		doNothing().when(preparedStatement).setString(3, "username");
 		doNothing().when(preparedStatement).setString(4, "email");
 		when(preparedStatement.execute()).thenReturn(true);	// Since this is a void method, used this as a marker of the code reaching the end with no issue
+		doNothing().when(context).addMessage(null, null);
 		
-		usercontroller.updateUserPass("testuser" , "curpass", "newpass", "newpass");
+		usercontroller.updateUserPass("tester" , "testpass1234", "newpass", "newpass");
         
         verify(preparedStatement).execute();
 	}

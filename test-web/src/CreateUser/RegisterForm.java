@@ -23,7 +23,10 @@ public class RegisterForm implements Serializable {
 	private String pwd;
 	private String checkpwd;
 	private String password;
-
+	
+	
+	Connect2DB connect2DB = new Connect2DB();
+	
 	public RegisterForm() {
 	}
 	
@@ -62,7 +65,7 @@ public class RegisterForm implements Serializable {
 	
 	//Method to check if "password" and confirmed password match
 	public String checkPass(RegisterForm registerForm) {
-		Connect2DB connect2DB = new Connect2DB();
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (!checkUser(registerForm)) { 		//checks if user exists in DB
 			if (!checkEmail(registerForm)) {	//checks if email exists in DB

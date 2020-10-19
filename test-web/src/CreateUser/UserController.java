@@ -26,6 +26,7 @@ import Validation.PassHash;
 public class UserController {
 	
 	DataSource ds = DsFactory.getDataSource();
+	DbConnect dbConnect = new DbConnect();
 	
 	//method used to create the datatable with all user info
 	public List<RegisterForm> getUsers() {
@@ -184,7 +185,7 @@ public class UserController {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		FacesContext context = FacesContext.getCurrentInstance();
-		DbConnect dbConnect = new DbConnect();
+		
 		
 		if (dbConnect.getPass(username, curPass)) {		//check typed password to DB password
 			if (newPass.equals(confPass)) {

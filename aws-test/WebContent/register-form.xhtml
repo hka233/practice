@@ -128,9 +128,11 @@
 						value="#{registerForm.firstname}"
 						validatorMessage="First Name: Enter a valid first name" 
 						pt:placeholder="First Name"
-						required = "true"/>
-						<f:validateLength minimum="2" maximum="35"/>
+						required = "true">
 						<f:validateRegex pattern="[a-zA-Z]+"/>
+						<f:validateLength minimum="2" maximum="35"/>
+						</p:inputText>
+						
 		
 					
 		<p:inputText 	id="lastname" 
@@ -141,9 +143,12 @@
 						value="#{registerForm.lastname}" 
 						validatorMessage="Last Name: Enter a valid last name"
 						pt:placeholder="Last Name"
-						required = "true"/>
-						<f:validateLength minimum="2" maximum="35"/>
+						required = "true">
 						<f:validateRegex pattern="[a-zA-Z]+"/>
+						<f:validateLength minimum="2" maximum="35"/>
+						</p:inputText>
+						
+						
 						
 		<br/>
 		
@@ -198,7 +203,8 @@
 						label = "Confirmed Password"
 						value="#{registerForm.checkpwd}"
 						pt:placeholder="Confirm Password"
-						required = "true"/>
+						required = "true">
+						</p:password>
 
 		<br/><br/>
 
