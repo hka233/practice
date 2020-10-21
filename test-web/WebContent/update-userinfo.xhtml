@@ -161,7 +161,7 @@
 						value="#{registerForm.email}"  
 						validatorMessage="Email Address: Invalid email format"
 						required = "true">
-						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						<f:validateRegex pattern="^(?![0-9]+@)^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</h:inputText>
 						
 		

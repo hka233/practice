@@ -126,8 +126,12 @@
 						align="center"
 						label = "First Name"
 						value="#{registerForm.firstname}" 
+						validatorMessage="First Name: Enter a valid first name" 
 						pt:placeholder="First Name"
-						required = "true"/>
+						required = "true">
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						<f:validateLength minimum="2" maximum="35"/>
+						</p:inputText>
 		
 					
 		<p:inputText 	id="lastname" 
@@ -136,9 +140,12 @@
 						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
+						validatorMessage="Last Name: Enter a valid last name"
 						pt:placeholder="Last Name"
-						required = "true"/>
-						
+						required = "true">
+						<f:validateRegex pattern="[a-zA-Z]+"/>
+						<f:validateLength minimum="2" maximum="35"/>
+						</p:inputText>
 		<br/>
 		
 		<p:inputText 	id="email" 
@@ -148,9 +155,9 @@
 						label= "Email"
 						value="#{registerForm.email}"  
 						pt:placeholder="Email"
-						validatorMessage="Invalid email format"
+						validatorMessage="Email Address: Invalid email format"
 						required = "true">
-						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						<f:validateRegex pattern="^(?![0-9]+@)^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
 									
 		<br/>
@@ -161,8 +168,12 @@
 						align="center" 
 						label = "Username"
 						value="#{registerForm.uname}" 
+						validatorMessage="Username: Starts with a letter and contains only alphanumeric character(minimum of 2 character)"
 						pt:placeholder="Type in Username"
-						required = "true"/>
+						required = "true">
+						<f:validateLength minimum="2" maximum="15"/>
+						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
+						</p:inputText>
 						
 		<br/>
 		
@@ -173,8 +184,10 @@
 						label = "Password"
 						value="#{registerForm.pwd}" 
 						pt:placeholder="New Password"
+						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
+						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
 						</p:password>
 
 		<br/>
