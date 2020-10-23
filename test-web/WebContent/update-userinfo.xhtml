@@ -185,7 +185,7 @@
 		<br/><br/>
 		
 
-		<h:commandButton value="Save" class="submit" action="#{userController.updateUserInfo(registerForm, checkAuthentication.getUsername())}" />
+		<h:commandButton value="Save" class="submit" action="#{userController.updateUserInfo(registerForm, userController.getStoredUser())}" />
 		<p class="login"><h:link value="Return to Home" outcome="welcome-page?faces-redirect=true" /></p>
 	</div>
 	</h:form>

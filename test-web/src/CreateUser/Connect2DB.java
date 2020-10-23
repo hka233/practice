@@ -101,6 +101,37 @@ public class Connect2DB {
 		return emailExist;
 	}
 	
+	public boolean searchUpEmail(String username, String email) throws Exception {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		boolean emailExist = false;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testDB.account_info WHERE username = ?;"; //query to database
+			
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			myStmt.setString(1, username);
+			
+			myRs = myStmt.executeQuery();
+			
+			while (myRs.next()) {
+				String DBemail = myRs.getString("email");
+				if (DBemail == email) emailExist = true;
+			}
+		}
+			finally {
+				close (myConn, myStmt);
+			}
+		return emailExist;
+	}
+	
 	//Method to check if username is used
 	public boolean searchUser(RegisterForm userinfo) throws Exception {
 		Connection myConn = null;

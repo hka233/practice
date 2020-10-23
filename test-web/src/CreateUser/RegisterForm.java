@@ -25,6 +25,7 @@ public class RegisterForm implements Serializable {
 	private String password;
 	
 	
+	
 	Connect2DB connect2DB = new Connect2DB();
 	
 	public RegisterForm() {

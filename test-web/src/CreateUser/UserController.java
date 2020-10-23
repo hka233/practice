@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -22,11 +23,22 @@ import Validation.DbConnect;
 import Validation.PassHash;
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class UserController {
 	
 	DataSource ds = DsFactory.getDataSource();
 	DbConnect dbConnect = new DbConnect();
+	Connect2DB connect2db = new Connect2DB();
+
+	private String storedUser;
+	
+	public String getStoredUser() {
+		return storedUser;
+	}
+
+	public void setStoredUser(String storedUser) {
+		this.storedUser = storedUser;
+	}
 	
 	//method used to create the datatable with all user info
 	public List<RegisterForm> getUsers() {
@@ -108,6 +120,7 @@ public class UserController {
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Map<String, Object> requestMap = externalContext.getRequestMap();
 			requestMap.put("registerForm", userinfo);
+			setStoredUser(user);
 			
 			
 		} catch (Exception e) {
@@ -127,8 +140,8 @@ public class UserController {
 		PreparedStatement myStmt = null;
 		RegisterForm regForm = new RegisterForm();
 		
-		if (!(regForm.checkUser(registerform))) {
-			if (!regForm.checkEmail(registerform)) {
+		if (!(regForm.checkUser(registerform)) || (username.equals(registerform.getUname()))) {
+			if (!connect2db.searchUpEmail(username , registerform.getEmail())) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 				myConn = ds.getConnection();
@@ -150,11 +163,9 @@ public class UserController {
 				
 				myStmt.execute();
 						
-				CheckAuthentication checkauth = new CheckAuthentication();
 				//checkauth.setUsername(registerform.getUname());
-				checkauth.setUsername(registerform.getUname());
-				
-				
+				setStoredUser(registerform.getUname());
+								
 				context.addMessage(null, new FacesMessage("User info updated"));
 			}
 			finally {
