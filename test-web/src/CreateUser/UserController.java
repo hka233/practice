@@ -279,9 +279,7 @@ public class UserController {
 					
 					myStmt.execute();
 					
-					CheckAuthentication checkauth = new CheckAuthentication();
-					//checkauth.setUsername(registerform.getUname());
-					checkauth.setPassword(newPass);
+					setPassword(newPass);
 					
 					context.addMessage(null, new FacesMessage("Password has been updated"));
 				}
