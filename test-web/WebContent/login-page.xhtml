@@ -113,14 +113,14 @@
 
 		<p:messages globalOnly="true"  /><br/><br/>
 		
-        <p:inputText id="username" class="user " type="text" align="center" value="#{checkAuthentication.username}"
+        <p:inputText id="username" class="user " type="text" align="center" value="#{userController.username}"
 					pt:placeholder="Type in Username" /> 
 					<p:message for="username" styleclass= "error"></p:message>
  
-        <p:password id="password" class="pass" type="password" align="center" value="#{checkAuthentication.password}"
+        <p:password id="password" class="pass" type="password" align="center" value="#{userController.password}"
         			pt:placeholder="Type in Password"/>
         <div class = "button" >			
-	        <h:commandButton class="submit"  value="Sign in"  action="#{checkAuthentication.checkAuth}" /> <br/>
+	        <h:commandButton class="submit"  value="Sign in"  action="#{userController.checkAuth}" /> <br/>
 			    
 			<p class="signup" align="center"><h:commandLink value="Sign Up"  action="#{registerForm.navigateRegister}"/></p>
 		</div>

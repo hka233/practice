@@ -1,9 +1,12 @@
 package CreateUser;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
 import DBSource.DsFactory;
@@ -23,22 +27,75 @@ import Validation.DbConnect;
 import Validation.PassHash;
 
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class UserController {
 	
 	DataSource ds = DsFactory.getDataSource();
 	DbConnect dbConnect = new DbConnect();
 	Connect2DB connect2db = new Connect2DB();
 
-	private String storedUser;
-	
-	public String getStoredUser() {
-		return storedUser;
+	private String username;
+	private String password;
+		
+	public String getUsername() {
+		return username;
 	}
 
-	public void setStoredUser(String storedUser) {
-		this.storedUser = storedUser;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public boolean checkDB() {
+		DbConnect dbConnect = new DbConnect();
+		return dbConnect.getPass(username,password);
+	}
+	//checks whether the typed username and password is correct
+	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if (checkDB()) {
+			context.getExternalContext().getSessionMap().put("username", username); //adds username into session: as long as it is saved there, the user is logged in
+			try {
+				context.getExternalContext().redirect("welcome-page.xhtml"); //redirects to welcome page
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else 
+			//Send an error message on Login Failure 
+            context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
+		
+	}
+	//removes values from the session which would make them unable to get into welcome page without logging in again
+	public void logout() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+    	context.getExternalContext().invalidateSession();
+        try {
+			context.getExternalContext().redirect("login-page.xhtml");  //redirects them to login page
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void navigateRegister() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			context.getExternalContext().redirect("user-info.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	//method used to create the datatable with all user info
 	public List<RegisterForm> getUsers() {
@@ -120,7 +177,7 @@ public class UserController {
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			Map<String, Object> requestMap = externalContext.getRequestMap();
 			requestMap.put("registerForm", userinfo);
-			setStoredUser(user);
+			
 			
 			
 		} catch (Exception e) {
@@ -164,7 +221,7 @@ public class UserController {
 				myStmt.execute();
 						
 				//checkauth.setUsername(registerform.getUname());
-				setStoredUser(registerform.getUname());
+				setUsername(registerform.getUname());
 								
 				context.addMessage(null, new FacesMessage("User info updated"));
 			}

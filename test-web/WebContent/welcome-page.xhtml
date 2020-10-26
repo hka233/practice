@@ -101,12 +101,12 @@
 	</h:head>
 	<h:body>
 	<div class= "register-form" >
-	<p class="title" >Welcome #{checkAuthentication.username}! </p> <br/>
-		<p class="inform" > Your password is #{checkAuthentication.password} </p>
+	<p class="title" >Welcome #{userController.username}! </p> <br/>
+		<p class="inform" > Your password is #{userController.password} </p>
 		<h:form>
 		
-		<h:commandLink class="link" value="Logout" action="#{checkAuthentication.logout}" /><br/>
-		<h:commandLink class = "update" value="Update User Info" action="#{userController.loadUser(checkAuthentication.username)}" /><br/>
+		<h:commandLink class="link" value="Logout" action="#{userController.logout}" /><br/>
+		<h:commandLink class = "update" value="Update User Info" action="#{userController.loadUser(userController.username)}" /><br/>
 		<h:commandLink class = "respass" value="Change Password" action="#{userController.navigateResetPass}" /><br/>
 	</h:form>
 	
