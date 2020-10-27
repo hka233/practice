@@ -66,8 +66,25 @@ public class RegisterForm implements Serializable {
 	
 	//Method to check if "password" and confirmed password match
 	public String checkPass(RegisterForm registerForm) {
+		boolean fncheck = true; // check firstname
+		boolean lncheck = true; // checks lastname
+		boolean uncheck = true; // checks username
 		
 		FacesContext context = FacesContext.getCurrentInstance();
+		if(registerForm.firstname.length() > 35 | registerForm.firstname.length() < 2) {
+			context.addMessage(null, new FacesMessage("First Name should have more than 1 char and less than 35"));
+			fncheck = false;
+		}
+		if(registerForm.lastname.length() > 35 | registerForm.lastname.length() < 2) {
+			context.addMessage(null, new FacesMessage("Last Name should have more than 1 char and less than 35"));
+			lncheck = false;
+		}
+		if(registerForm.uname.length() > 16 | registerForm.uname.length() < 2)  {
+			context.addMessage(null, new FacesMessage("Username should have more than 1 char and less than 15"));	
+			uncheck = false;
+		}
+		
+		if(fncheck && lncheck && uncheck) {
 		if (!checkUser(registerForm)) { 		//checks if user exists in DB
 			if (!checkEmail(registerForm)) {	//checks if email exists in DB
 				if (pwd.equals(checkpwd)) {
@@ -89,8 +106,9 @@ public class RegisterForm implements Serializable {
 		}
 		else
 			context.addMessage(null, new FacesMessage("This username is taken"));
+		}
 		
-		return null;
+			return null;
 	}
 	
 	//Used to redirect to user-info page, and to erase all input field when returning to login page

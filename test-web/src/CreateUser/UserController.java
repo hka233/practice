@@ -197,6 +197,24 @@ public class UserController {
 		PreparedStatement myStmt = null;
 		RegisterForm regForm = new RegisterForm();
 		
+		boolean fncheck = true; // check firstname
+		boolean lncheck = true; // checks lastname
+		boolean uncheck = true; // checks username
+		
+		if(registerform.getFirstname().length() > 35 | registerform.getFirstname().length() < 2) {
+			context.addMessage(null, new FacesMessage("First Name should have more than 1 char and less than 35"));
+			fncheck = false;
+		}
+		if(registerform.getLastname().length() > 35 | registerform.getLastname().length() < 2) {
+			context.addMessage(null, new FacesMessage("Last Name should have more than 1 char and less than 35"));
+			lncheck = false;
+		}
+		if(registerform.getUname().length() > 16 | registerform.getUname().length() < 2)  {
+			context.addMessage(null, new FacesMessage("Username should have more than 1 char and less than 15"));	
+			uncheck = false;
+		}
+		
+		if(fncheck && lncheck && uncheck) {
 		if (!(regForm.checkUser(registerform)) || (username.equals(registerform.getUname()))) {
 			if (!connect2db.searchUpEmail(username , registerform.getEmail())) {
 			try {
@@ -233,6 +251,7 @@ public class UserController {
 				context.addMessage(null, new FacesMessage("This email is already registered"));
 		} else
 			context.addMessage(null, new FacesMessage("This username is taken"));
+		}
 			
 		
 	}

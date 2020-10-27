@@ -126,9 +126,8 @@
 						align="center"
 						label = "First Name"
 						value="#{registerForm.firstname}" 
-						validatorMessage="First Name: Enter a valid first name"
+						validatorMessage="First Name: Should be only alphabets!"
 						required = "true">
-						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
 						</h:inputText>
 						
@@ -143,9 +142,8 @@
 						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
-						validatorMessage="Last Name: Enter a valid last name"
+						validatorMessage="Last Name: Should be only alphabets!"
 						required = "true">
-						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[a-zA-Z]+"/>
 						</h:inputText>
 						
@@ -177,7 +175,6 @@
 						value="#{registerForm.uname}" 
 						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
 						required = "true">
-						<f:validateLength minimum="2" maximum="35"/>
 						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
 						</h:inputText>
 						

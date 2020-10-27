@@ -5,6 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
     xmlns:a="http://xmlns.jcp.org/jsf/facelets">
 
 
@@ -126,11 +128,10 @@
 						align="center"
 						label = "First Name"
 						value="#{registerForm.firstname}" 
-						validatorMessage="First Name: Enter a valid first name" 
+						validatorMessage="First Name: Should be only alphabets!"
 						pt:placeholder="First Name"
 						required = "true">
-						<f:validateRegex pattern="[a-zA-Z]+"/>
-						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"  />
 						</p:inputText>
 		
 					
@@ -140,11 +141,10 @@
 						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
-						validatorMessage="Last Name: Enter a valid last name"
+						validatorMessage="Last Name: Should be only alphabets!"
 						pt:placeholder="Last Name"
 						required = "true">
-						<f:validateRegex pattern="[a-zA-Z]+"/>
-						<f:validateLength minimum="2" maximum="35"/>
+						<f:validateRegex pattern="[a-zA-Z]+"    />
 						</p:inputText>
 		<br/>
 		
@@ -168,10 +168,9 @@
 						align="center" 
 						label = "Username"
 						value="#{registerForm.uname}" 
-						validatorMessage="Username: Starts with a letter and contains only alphanumeric character(minimum of 2 character)"
+						validatorMessage="Username: Starts with a letter and contains only alphanumeric character"
 						pt:placeholder="Type in Username"
 						required = "true">
-						<f:validateLength minimum="2" maximum="15"/>
 						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
 						</p:inputText>
 						
