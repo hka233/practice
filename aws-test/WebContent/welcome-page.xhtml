@@ -101,8 +101,8 @@
 	</h:head>
 	<h:body>
 	<div class= "register-form" >
-	<p class="title" ><h:outputText value="#{userController.getUsers().uname}" /> </p> <br/>
-		<p class="inform" > <h:outputText value="#{userController.getUsers().password}" /></p>
+	<p class="title" >Welcome #{userController.username}! </p> <br/>
+		<p class="inform" > Your password is #{userController.password} </p>
 		<h:form>
 		
 		<h:commandLink class="link" value="Logout" action="#{userController.logout}" /><br/>

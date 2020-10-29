@@ -183,10 +183,10 @@
 						label = "Password"
 						value="#{registerForm.pwd}" 
 						pt:placeholder="New Password"
-						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
+						validatorMessage="Password: Min:8 Max:15chars, at least one letter and one number"
 						required = "true">
 						<f:validateLength minimum="8" maximum="15"/>
-						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
+						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,15}$" />
 						</p:password>
 
 		<br/>
