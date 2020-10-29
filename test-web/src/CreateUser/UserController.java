@@ -96,7 +96,6 @@ public class UserController {
 		}
 	}
 	
-	
 	//method used to create the datatable with all user info
 	public List<RegisterForm> getUsers() {
 

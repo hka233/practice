@@ -24,6 +24,10 @@ public class RegisterForm implements Serializable {
 	private String checkpwd;
 	private String password;
 
+	
+	
+	Connect2DB connect2DB = new Connect2DB();
+	
 	public RegisterForm() {
 	}
 	
@@ -48,8 +52,6 @@ public class RegisterForm implements Serializable {
 		return chkemail;
 	}
 	
-	
-	
 	//checks if username is already taken
 	public boolean checkUser(RegisterForm registerForm)  {
 		Connect2DB connect2DB = new Connect2DB();
@@ -64,8 +66,26 @@ public class RegisterForm implements Serializable {
 	
 	//Method to check if "password" and confirmed password match
 	public String checkPass(RegisterForm registerForm) {
-		Connect2DB connect2DB = new Connect2DB();
+		boolean fncheck = true; // check firstname
+		boolean lncheck = true; // checks lastname
+		boolean uncheck = true; // checks username
+		boolean passcheck = true; // checks password
+		
 		FacesContext context = FacesContext.getCurrentInstance();
+		if(registerForm.firstname.length() > 35 | registerForm.firstname.length() < 2) {
+			context.addMessage(null, new FacesMessage("First Name should have more than 1 char and less than 35"));
+			fncheck = false;
+		}
+		if(registerForm.lastname.length() > 35 | registerForm.lastname.length() < 2) {
+			context.addMessage(null, new FacesMessage("Last Name should have more than 1 char and less than 35"));
+			lncheck = false;
+		}
+		if(registerForm.uname.length() > 16 | registerForm.uname.length() < 2)  {
+			context.addMessage(null, new FacesMessage("Username should have more than 1 char and less than 15"));	
+			uncheck = false;
+		}
+		
+		if(fncheck && lncheck && uncheck) {
 		if (!checkUser(registerForm)) { 		//checks if user exists in DB
 			if (!checkEmail(registerForm)) {	//checks if email exists in DB
 				if (pwd.equals(checkpwd)) {
@@ -87,6 +107,7 @@ public class RegisterForm implements Serializable {
 		}
 		else
 			context.addMessage(null, new FacesMessage("This username is taken"));
+		}
 		
 		return null;
 	}

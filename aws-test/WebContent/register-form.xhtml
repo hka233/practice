@@ -126,14 +126,12 @@
 						align="center"
 						label = "First Name"
 						value="#{registerForm.firstname}"
-						validatorMessage="First Name: Enter a valid first name" 
+						validatorMessage="First Name: Should be only alphabets!" 
 						pt:placeholder="First Name"
 						required = "true">
 						<f:validateRegex pattern="[a-zA-Z]+"/>
-						<f:validateLength minimum="2" maximum="35"/>
 						</p:inputText>
-						
-		
+							
 					
 		<p:inputText 	id="lastname" 
 						class="user " 
@@ -141,11 +139,10 @@
 						align="center"
 						label= "Last Name"
 						value="#{registerForm.lastname}" 
-						validatorMessage="Last Name: Enter a valid last name"
+						validatorMessage="Last Name: Should be only alphabets!"
 						pt:placeholder="Last Name"
 						required = "true">
 						<f:validateRegex pattern="[a-zA-Z]+"/>
-						<f:validateLength minimum="2" maximum="35"/>
 						</p:inputText>
 						
 						
@@ -175,7 +172,6 @@
 						validatorMessage="Username: Starts with a letter and contains only alphanumeric character(minimum of 2 character)"
 						pt:placeholder="Type in Username"
 						required = "true">
-						<f:validateLength minimum="2" maximum="15"/>
 						<f:validateRegex pattern="[A-Za-z]+([0-9A-Za-z])*" />
 						</p:inputText>
 						
@@ -188,10 +184,9 @@
 						label = "Password"
 						value="#{registerForm.pwd}" 
 						pt:placeholder="Create Password"
-						validatorMessage="Password: Minimum eight characters, at least one letter and one number:"
+						validatorMessage="Password: Min:8 Max:15chars, at least one letter and one number"
 						required = "true">
-						<f:validateLength minimum="8" maximum="15"/>
-						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,}$" />
+						<f:validateRegex pattern="^(?=.*\d)(?=.*[a-zA-Z])[\w~@#$%^&amp;*+=`|{}:;!.?()\[\]-]{8,15}$" />
 						</p:password>
 
 		<br/>
