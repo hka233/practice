@@ -278,7 +278,7 @@ public class UserController {
 		}
 		
 		if(fncheck && lncheck && uncheck) {
-		if (!(regForm.checkUser(registerform)) || (username.equals(registerform.getUname()))) {
+		if (!(regForm.checkUser(registerform)) || (username.equalsIgnoreCase(registerform.getUname()))) {
 			if (!connect2db.searchUpEmail(username , registerform.getEmail())) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
