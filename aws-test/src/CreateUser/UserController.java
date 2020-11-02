@@ -35,6 +35,15 @@ public class UserController {
 	
 	private String username;
 	private String password;
+	private int idnum;
+
+	public int getIdnum() {
+		return idnum;
+	}
+
+	public void setIdnum(int idnum) {
+		this.idnum = idnum;
+	}
 
 	public String getUsername() {
 		return username;

@@ -162,6 +162,38 @@ public class Connect2DB {
 		return userExist;
 	}
 	
+	//Method to retrieve IDnum is used
+		public int retrieveIDnum(String username) throws Exception {
+			Connection myConn = null;
+			PreparedStatement myStmt = null;
+			ResultSet myRs = null;
+			
+			int idnum = 0;
+			
+			try {
+				Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+				myConn = ds.getConnection();
+				
+				String sql = "SELECT * FROM testdb.account_info WHERE username = ?;"; //query to database
+				
+				myStmt = myConn.prepareStatement(sql);
+				
+				myStmt.setString(1, username);
+				
+				myRs = myStmt.executeQuery();
+				
+				while (myRs.next()) {
+					idnum = myRs.getInt("id_num");
+				}
+			}
+				finally {
+					close (myConn, myStmt);
+				}
+			return idnum;
+		}
+		
+		
+	
 	//Method primarily for testing addUser, it retrieve user info from db, may be used for future function
 	public RegisterForm retrieve(String user) throws Exception {
 		Connection myConn = null;
