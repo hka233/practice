@@ -61,12 +61,13 @@ public class UserController {
 		this.password = password;
 	}
 	
-	public boolean checkDB() {
+	public boolean checkDB() throws Exception {
 		DbConnect dbConnect = new DbConnect();
+		setIdnum(connect2db.retrieveIDnum(username));
 		return dbConnect.getPass(username,password);
 	}
 	//checks whether the typed username and password is correct
-	public void checkAuth() throws ServletException, IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+	public void checkAuth() throws Exception {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		
@@ -149,6 +150,60 @@ public class UserController {
 		return users;	
 	}
 	
+	public String retUser() throws Exception {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testDB.account_info WHERE id_num = ?;"; //query to database
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			myStmt.setInt(1, idnum);
+			myRs = myStmt.executeQuery();
+			
+			String username = null;
+			while (myRs.next()) {
+			username = myRs.getString("username");
+			}
+			return username;
+		}
+			finally {
+				close (myConn, myStmt);
+			}
+	}
+	
+	public String retPass() throws Exception {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testDB.account_info WHERE id_num = ?;"; //query to database
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			myStmt.setInt(1, idnum);
+			myRs = myStmt.executeQuery();
+			
+			String retpass = null;
+			while (myRs.next()) {
+			retpass = myRs.getString("password");
+			}
+			return retpass;
+		}
+			finally {
+				close (myConn, myStmt);
+			}
+	}
+	
 	//Displays the loggedin user credentials in text box so that it can be easily updated by user
 	public String loadUser(String user) {
 		//logger.info("loading student: " + registerform);
@@ -221,10 +276,9 @@ public class UserController {
 			uncheck = false;
 		}
 		
-		
 		if(fncheck && lncheck && uncheck) {
-		if (!(regForm.checkUser(registerform)) || (username.equals(registerform.getUname()))) {
-			if (!connect2db.searchUpEmail(username , registerform.getEmail())) {
+		if (!(regForm.checkUser(registerform)) || (username.equalsIgnoreCase(registerform.getUname()))) {
+			if (!connect2db.searchUpEmail(registerform.getEmail()) || (registerform.getEmail().equalsIgnoreCase(connect2db.searchtheEmail(idnum)))) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 				myConn = ds.getConnection();

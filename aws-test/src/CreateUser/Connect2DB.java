@@ -102,7 +102,39 @@ public class Connect2DB {
 		return emailExist;
 	}
 	
-	public boolean searchUpEmail(String username, String email) throws Exception {
+	public String searchtheEmail(int idnum) throws Exception {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		String DBemail = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testDB.account_info WHERE id_num = ?;";//query to database
+			
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			myStmt.setInt(1, idnum);
+			
+			myRs = myStmt.executeQuery();
+			
+			while (myRs.next()) {
+				DBemail = myRs.getString("email");
+			}
+			
+		}
+			finally {
+				close (myConn, myStmt);
+			}
+		return DBemail;
+	}
+	
+	
+	public boolean searchUpEmail(String email) throws Exception {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
@@ -113,18 +145,18 @@ public class Connect2DB {
 			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
 			myConn = ds.getConnection();
 			
-			String sql = "SELECT * FROM testDB.account_info WHERE username = ?;"; //query to database
+			String sql = "SELECT * FROM testDB.account_info WHERE email = ?;"; //query to database
 			
 			
 			myStmt = myConn.prepareStatement(sql);
 			
-			myStmt.setString(1, username);
+			myStmt.setString(1, email);
 			
 			myRs = myStmt.executeQuery();
 			
 			while (myRs.next()) {
-				String DBemail = myRs.getString("email");
-				if (DBemail == email) emailExist = true;
+				//String DBemail = myRs.getString("email");
+				emailExist = true;
 			}
 		}
 			finally {
@@ -236,6 +268,35 @@ public class Connect2DB {
 			close (myConn, myStmt, myRs);
 		}
 		return users;	
+	}
+	
+	public int retrieveIDnum(String username) throws Exception {
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		int idnum = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); //used to force apache to use this driver
+			myConn = ds.getConnection();
+			
+			String sql = "SELECT * FROM testDB.account_info WHERE username = ?;"; //query to database
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			myStmt.setString(1, username);
+			
+			myRs = myStmt.executeQuery();
+			
+			while (myRs.next()) {
+				idnum = myRs.getInt("id_num");
+			}
+		}
+			finally {
+				close (myConn, myStmt);
+			}
+		return idnum;
 	}
 	
 	private void close(Connection theConn, Statement theStmt) {
